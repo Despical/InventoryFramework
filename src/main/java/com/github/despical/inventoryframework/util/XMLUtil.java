@@ -13,7 +13,15 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
-
+/**
+ * 
+ * An utility class for xml files
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
+ */
 public class XMLUtil {
 
     /**
@@ -21,10 +29,8 @@ public class XMLUtil {
      *
      * @param instance the object instance
      * @param element the element
-     * @param eventType the type of the event
      * @param name the name of the attribute
      * @return the consumer to be called on click
-     * @param <T> the type of the event
      */
     @Nullable
     @Contract(pure = true)

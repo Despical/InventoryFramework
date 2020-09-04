@@ -19,8 +19,11 @@ import java.util.stream.Stream;
 
 /**
  * A variable bar for UI elements that require some sort of bar
- *
- * @since 0.5.0
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public abstract class VariableBar extends Pane implements Orientable, Flippable  {
 
@@ -115,35 +118,6 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
         this.backgroundPane.setHeight(height);
     }
 
-    /**
-     * Applies the contents of this variable bar onto the provided copy of this variable bar. This variable bar will not
-     * be modified.
-     *
-     * @param copy the copy of the variable bar
-     * @since 0.6.2
-     */
-    protected void applyContents(@NotNull VariableBar copy) {
-        copy.x = x;
-        copy.y = y;
-        copy.length = length;
-        copy.height = height;
-        copy.setPriority(getPriority());
-
-        copy.setVisible(isVisible());
-        copy.onClick = onClick;
-
-        copy.setFillItem(fillPane.getItems().get(0).copy());
-        copy.setBackgroundItem(backgroundPane.getItems().get(0).copy());
-
-        copy.value = value;
-        copy.orientation = orientation;
-
-        copy.flipHorizontally = flipHorizontally;
-        copy.flipVertically = flipVertically;
-
-        copy.uuid = uuid;
-    }
-
     @Override
     public void setOrientation(@NotNull Orientation orientation) {
         this.orientation = orientation;
@@ -193,7 +167,7 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
      * Sets the fill item (foreground)
      *
      * @param item the new item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setFillItem(@NotNull GuiItem item) {
         fillPane.clear();
@@ -205,7 +179,7 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
      * Sets the background item
      *
      * @param item the new item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setBackgroundItem(@NotNull GuiItem item) {
         backgroundPane.clear();

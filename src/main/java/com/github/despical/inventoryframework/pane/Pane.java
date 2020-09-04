@@ -5,9 +5,10 @@ import com.github.despical.inventoryframework.GuiItem;
 import com.github.despical.inventoryframework.exception.XMLLoadException;
 import com.github.despical.inventoryframework.exception.XMLReflectionException;
 import com.github.despical.inventoryframework.util.SkullUtil;
-import com.github.despical.inventoryframework.util.UUIDTagType;
 import com.github.despical.inventoryframework.util.XMLUtil;
 import com.google.common.primitives.Primitives;
+import me.ialistannen.mininbt.ItemNBTUtil;
+import me.ialistannen.mininbt.NBTWrappers;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,7 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,17 +27,19 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.lang.UnsupportedOperationException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The base class for all panes.
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public abstract class Pane {
 
@@ -63,15 +65,10 @@ public abstract class Pane {
     private Priority priority;
 
     /**
-     * The consumer that will be called once a players clicks in this pane
+     * The consumer that will be called once a players clicks in the gui
      */
     @Nullable
     protected Consumer<InventoryClickEvent> onClick;
-
-    /**
-     * A unique identifier for panes to locate them by
-     */
-    protected UUID uuid;
 
     /**
      * A map containing the mappings for properties for items
@@ -97,8 +94,6 @@ public abstract class Pane {
 
         this.priority = priority;
         this.visible = true;
-
-        this.uuid = UUID.randomUUID();
     }
 
     /**
@@ -113,8 +108,6 @@ public abstract class Pane {
 
         this.priority = Priority.NORMAL;
         this.visible = true;
-
-        this.uuid = UUID.randomUUID();
     }
 
     /**
@@ -128,19 +121,6 @@ public abstract class Pane {
     protected Pane(int x, int y, int length, int height) {
         this(x, y, length, height, Priority.NORMAL);
     }
-
-    /**
-	 * Makes a copy of this pane and returns it. This makes a deep copy of the pane. This entails that the underlying
-	 * panes and/or items will be copied as well. The returned pane will never be reference equal to the current pane.
-	 *
-	 * @return a copy of this pane
-	 * @since 0.6.2
-	 */
-	@NotNull
-	@Contract(pure = true)
-    public Pane copy() {
-		throw new UnsupportedOperationException("The implementing pane hasn't overridden the copy method");
-	}
 
     /**
      * Set the length of this pane
@@ -196,18 +176,6 @@ public abstract class Pane {
     @Contract(pure = true)
     public int getHeight() {
         return height;
-    }
-
-    /**
-     * Gets the {@link UUID} associated with this pane.
-     *
-     * @return the uuid
-     * @since 0.7.1
-     */
-    @NotNull
-    @Contract(pure = true)
-    public UUID getUUID() {
-        return uuid;
     }
 
     /**
@@ -303,7 +271,6 @@ public abstract class Pane {
         int amount = hasAmount ? Integer.parseInt(element.getAttribute("amount")) : 1;
         short damage = hasDamage ? Short.parseShort(element.getAttribute("damage")) : 0;
 
-        //noinspection deprecation
         ItemStack itemStack = new ItemStack(material, amount, damage);
 
         List<Object> properties = new ArrayList<>();
@@ -388,7 +355,6 @@ public abstract class Pane {
                     SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
 
                     if (elementItem.hasAttribute("owner"))
-                        //noinspection deprecation
                         skullMeta.setOwner(elementItem.getAttribute("owner"));
                     else if (elementItem.hasAttribute("id")) {
                         SkullUtil.setSkull(skullMeta, elementItem.getAttribute("id"));
@@ -413,7 +379,6 @@ public abstract class Pane {
                 if (parameterCount == 0)
                     action = event -> {
                         try {
-                            //because reflection with lambdas is stupid
                             method.setAccessible(true);
                             method.invoke(instance);
                         } catch (IllegalAccessException | InvocationTargetException exception) {
@@ -424,7 +389,6 @@ public abstract class Pane {
                     if (parameterCount == 1)
                         action = event -> {
                             try {
-                                //because reflection with lambdas is stupid
                                 method.setAccessible(true);
                                 method.invoke(instance, event);
                             } catch (IllegalAccessException | InvocationTargetException exception) {
@@ -446,14 +410,11 @@ public abstract class Pane {
                         if (correct) {
                             action = event -> {
                                 try {
-                                    //don't ask me why we need to do this, just roll with it (actually I do know why, but it's stupid)
                                     properties.add(0, event);
 
-                                    //because reflection with lambdas is stupid
                                     method.setAccessible(true);
                                     method.invoke(instance, properties.toArray(new Object[0]));
 
-                                    //since we'll append the event to the list next time again, we need to remove it here again
                                     properties.remove(0);
                                 } catch (IllegalAccessException | InvocationTargetException exception) {
                                     throw new XMLReflectionException(exception);
@@ -479,8 +440,6 @@ public abstract class Pane {
                 throw new XMLLoadException(exception);
             }
         }
-		
-		item.setProperties(properties);
 
         return item;
     }
@@ -535,24 +494,22 @@ public abstract class Pane {
      * @param item the item for which an {@link GuiItem} should be found
      * @param <T> a type of GuiItem, which will be used in the provided collection and as return type
      * @return the found type of {@link GuiItem} or null if none was found
-     * @since 0.5.14
+     * @since 1.0.1
      */
     @Nullable
     @Contract(pure = true)
     protected static <T extends GuiItem> T findMatchingItem(@NotNull Collection<T> items, @NotNull ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return null;
-        }
+        return items.stream().filter(guiItem -> {
+            NBTWrappers.NBTTagCompound tag = ItemNBTUtil.getTag(item);
 
-        UUID uuid = meta.getPersistentDataContainer().get(GuiItem.KEY_UUID, UUIDTagType.INSTANCE);
-        if (uuid == null) {
-            return null;
-        }
+            if (tag == null) {
+                return false;
+            }
 
-        return items.stream()
-                .filter(guiItem -> guiItem.getUUID().equals(uuid))
-                .findAny().orElse(null);
+            String stringUUID = tag.getString("IF-uuid");
+
+            return stringUUID != null && guiItem.getUUID().equals(UUID.fromString(stringUUID));
+        }).findAny().orElse(null);
     }
 
     /**
@@ -590,41 +547,27 @@ public abstract class Pane {
     /**
      * Clears the entire pane of any items/panes. Underlying panes will not be cleared.
      *
-     * @since 0.3.2
+     * @since 1.0.1
      */
     public abstract void clear();
 
     /**
-     * Set the consumer that should be called whenever this pane is clicked in.
+     * Set the consumer that should be called whenever this gui is clicked in.
      *
      * @param onClick the consumer that gets called
-     * @since 0.4.0
+     * @since 1.0.1
      */
     public void setOnClick(@Nullable Consumer<InventoryClickEvent> onClick) {
         this.onClick = onClick;
     }
-    
+
     /**
-     * Calls the consumer (if it's not null) that was specified using {@link #setOnClick(Consumer)},
-     * so the consumer that should be called whenever this pane is clicked in.
-     * Catches and logs all exceptions the consumer might throw.
+     * Set the consumer that should be called whenever this gui is clicked in.
      *
-     * @param event the event to handle
-     * @since 0.6.0
+     * @param onLocalClick the consumer that gets called
      */
-    protected void callOnClick(@NotNull InventoryClickEvent event) {
-        if (onClick == null) {
-            return;
-        }
-    
-        try {
-            onClick.accept(event);
-        } catch (Throwable t) {
-            Logger logger = JavaPlugin.getProvidingPlugin(getClass()).getLogger();
-            logger.log(Level.SEVERE, "Exception while handling click event in inventory '"
-                    + event.getView().getTitle() + "', slot=" + event.getSlot() + ", for "
-                    + getClass().getSimpleName() + ", x=" + x + ", y=" + y + ", length=" + length + ", height=" + height, t);
-        }
+    public void setOnLocalClick(@Nullable Consumer<InventoryClickEvent> onLocalClick) {
+        this.onClick = onLocalClick;
     }
 
     /**
@@ -643,6 +586,17 @@ public abstract class Pane {
         }
     
         PROPERTY_MAPPINGS.put(attributeName, function);
+    }
+
+    /**
+     * Returns the property mappings used when loading properties from an XML file.
+     *
+     * @return the property mappings
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static Map<String, Function<String, Object>> getPropertyMappings() {
+        return PROPERTY_MAPPINGS;
     }
 
     /**

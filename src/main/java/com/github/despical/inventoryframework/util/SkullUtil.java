@@ -13,16 +13,19 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * A utility class for working with skulls
+ * An utility class for working with skulls
  *
+ * @author Despical
  * @since 0.5.0
+ * <p>
+ * Created at 04.09.2020
  */
 public final class SkullUtil {
 
     /**
      * A private constructor to ensure this class isn't instantiated
      *
-     * @since 0.5.0
+     * @since 1.0.1
      */
     private SkullUtil() {}
 
@@ -32,7 +35,7 @@ public final class SkullUtil {
      *
      * @param id the skull id
      * @return the skull item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @NotNull
     public static ItemStack getSkull(@NotNull String id) {

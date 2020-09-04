@@ -15,14 +15,17 @@ import java.util.regex.Pattern;
 /**
  * A utility class for reading csv files
  *
- * @since 0.5.0
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public final class CSVUtil {
 
     /**
      * A private constructor to ensure this utility class is never instantiated
      *
-     * @since 0.5.0
+     * @since 1.0.1
      */
     private CSVUtil() {}
 
@@ -34,7 +37,7 @@ public final class CSVUtil {
      * @param inputStream the input stream to read from
      * @return a list of strings containing the values inside the file
      * @throws IOException when reading fails for any reason
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @NotNull
     public static List<String[]> readAll(@NotNull InputStream inputStream) throws IOException {
@@ -73,10 +76,7 @@ public final class CSVUtil {
                     }
 
                     array[i] = StringUtils.replace(array[i], "\"\"", "\"");
-                    //Restore original code (array[i] = array[i].replace("\"\"", "\""))
-                    //once we update to Java 11, where it receives the current, faster implementation
 
-                    //replace unicode characters
                     Matcher matcher = UNICODE_CHARACTER_PATTERN.matcher(array[i]);
                     StringBuffer buf = new StringBuffer(array[i].length());
 

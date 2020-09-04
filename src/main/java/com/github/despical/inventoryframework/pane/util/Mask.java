@@ -10,7 +10,10 @@ import java.util.Arrays;
  * A mask for {@link OutlinePane}s that specifies in which positions the items should be placed. Objects of this class
  * are immutable.
  *
- * @since 0.5.16
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class Mask {
 
@@ -30,7 +33,7 @@ public class Mask {
      * @param mask a var-arg of strings that represent this mask
      * @throws IllegalArgumentException when a string contains an illegal character or when strings have different
      * lengths
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public Mask(@NotNull String... mask) {
         this.mask = new boolean[mask.length][mask[0].length()];
@@ -60,7 +63,7 @@ public class Mask {
      * Returns the amount of slots in this mask that are 'enabled'.
      *
      * @return amount of enabled slots
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public int amountOfEnabledSlots() {
         int amount = 0;
@@ -83,7 +86,7 @@ public class Mask {
      *
      * @param index the column index
      * @return the column of this mask
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public boolean[] getColumn(int index) {
         boolean[] column = new boolean[mask[0].length];
@@ -102,7 +105,7 @@ public class Mask {
      *
      * @param index the row index
      * @return the row of this mask
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public boolean[] getRow(int index) {
         boolean[] row = mask[index];
@@ -117,7 +120,7 @@ public class Mask {
      * @param x the x coordinate of the slot
      * @param y the y coordinate of the slot
      * @return whether the slot is enabled or not
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public boolean isEnabled(int x, int y) {
         return mask[y][x];
@@ -127,7 +130,7 @@ public class Mask {
      * Gets the length of this mask
      *
      * @return the length
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public int getLength() {
         return mask[0].length;
@@ -137,7 +140,7 @@ public class Mask {
      * Gets the height of this mask
      *
      * @return the height
-     * @since 0.5.16
+     * @since 1.0.1
      */
     public int getHeight() {
         return mask.length;

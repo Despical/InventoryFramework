@@ -6,6 +6,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.AbstractMap;
 import java.util.Map;
 
+/**
+ * An utility class for Geometry
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
+ */
 public class GeometryUtil {
 
     /**
@@ -26,13 +34,11 @@ public class GeometryUtil {
 
         if (rotation == 90) {
             newX = height - 1 - y;
-            //noinspection SuspiciousNameCombination
             newY = x;
         } else if (rotation == 180) {
             newX = length - 1 - x;
             newY = height - 1 - y;
         } else if (rotation == 270) {
-            //noinspection SuspiciousNameCombination
             newX = y;
             newY = length - 1 - x;
         }

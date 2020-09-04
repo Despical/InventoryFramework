@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,6 +23,11 @@ import java.util.stream.Collectors;
 
 /**
  * A pane for panes that should be spread out over multiple pages
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class PaginatedPane extends Pane {
 
@@ -101,7 +105,6 @@ public class PaginatedPane extends Pane {
 	 */
 	@Contract("null -> fail")
 	public void populateWithItemStacks(@NotNull List<ItemStack> items) {
-		//Don't do anything if the list is empty
 		if (items.isEmpty()) {
 		    return;
         }
@@ -113,7 +116,6 @@ public class PaginatedPane extends Pane {
 			OutlinePane page = new OutlinePane(0, 0, this.length, this.height);
 
 			for (int j = 0; j < itemsPerPage; j++) {
-				//Check if the loop reached the end of the list
 				int index = i * itemsPerPage + j;
 
 				if (index >= items.size()) {
@@ -136,7 +138,6 @@ public class PaginatedPane extends Pane {
      */
     @Contract("null -> fail")
     public void populateWithGuiItems(@NotNull List<GuiItem> items) {
-        //Don't do anything if the list is empty
         if (items.isEmpty()) {
             return;
         }
@@ -150,7 +151,6 @@ public class PaginatedPane extends Pane {
             for (int j = 0; j < itemsPerPage; j++) {
                 int index = i * itemsPerPage + j;
 
-				//Check if the loop reached the end of the list
                 if (index >= items.size()) {
                     break;
                 }
@@ -204,12 +204,10 @@ public class PaginatedPane extends Pane {
         int height = Math.min(this.height, maxHeight);
 
         int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
         int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -221,12 +219,12 @@ public class PaginatedPane extends Pane {
             y = (slot / 9) - getY() - paneOffsetY;
         }
 
-        //this isn't our item
         if (x < 0 || x >= length || y < 0 || y >= height) {
             return false;
         }
 
-		callOnClick(event);
+        if (onClick != null)
+            onClick.accept(event);
 
         List<Pane> panes = this.panes.get(page);
 
@@ -242,28 +240,6 @@ public class PaginatedPane extends Pane {
         }
 
         return success;
-    }
-
-    @NotNull
-    @Contract(pure = true)
-    @Override
-    public PaginatedPane copy() {
-	    PaginatedPane paginatedPane = new PaginatedPane(x, y, length, height, getPriority());
-
-        for (Map.Entry<Integer, List<Pane>> entry : panes.entrySet()) {
-            for (Pane pane : entry.getValue()) {
-                paginatedPane.addPane(entry.getKey(), pane.copy());
-            }
-        }
-
-        paginatedPane.setVisible(isVisible());
-        paginatedPane.onClick = onClick;
-
-        paginatedPane.uuid = uuid;
-
-        paginatedPane.page = page;
-
-        return paginatedPane;
     }
 
     @NotNull
@@ -290,7 +266,7 @@ public class PaginatedPane extends Pane {
      *
      * @param page the panes of this page will be returned
      * @return a collection of panes belonging to the specified page
-     * @since 0.5.13
+     * @since 1.0.1
      * @throws IllegalArgumentException if the page does not exist
      */
     @NotNull

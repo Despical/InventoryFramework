@@ -18,7 +18,10 @@ import java.util.stream.Collectors;
  * A font for characters with a space as default character. Only one instance of this class should ever exist and should
  * be used everywhere.
  *
- * @since 0.5.0
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class CSVFont extends Font {
 
@@ -37,7 +40,7 @@ public class CSVFont extends Font {
      *
      * @param defaultCharacter the default character to use when a requested character cannot be found
      * @param filePath the relative file path to the csv file containing the character mappings
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public CSVFont(char defaultCharacter, String filePath) {
         this.defaultCharacter = defaultCharacter;

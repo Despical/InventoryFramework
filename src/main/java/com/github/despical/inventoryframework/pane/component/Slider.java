@@ -1,8 +1,6 @@
 package com.github.despical.inventoryframework.pane.component;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
@@ -16,8 +14,11 @@ import com.github.despical.inventoryframework.pane.component.util.VariableBar;
 
 /**
  * A slider for a graphical interface into what amount of a whole is set.
- *
+ * 
+ * @author Despical
  * @since 0.5.0
+ * <p>
+ * Created at 04.09.2020
  */
 public class Slider extends VariableBar {
 
@@ -40,12 +41,10 @@ public class Slider extends VariableBar {
         int height = Math.min(this.height, maxHeight);
 
         int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
         int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -61,7 +60,9 @@ public class Slider extends VariableBar {
             return false;
         }
 
-        callOnClick(event);
+        if (onClick != null) {
+            onClick.accept(event);
+        }
 
         int newPaneOffsetX = paneOffsetX + getX();
         int newPaneOffsetY = paneOffsetY + getY();
@@ -88,7 +89,7 @@ public class Slider extends VariableBar {
      *
      * @param value the new value.
      * @throws IllegalArgumentException when the value is out of range
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setValue(float value) {
         if (value < 0 || value > 1) {
@@ -114,22 +115,11 @@ public class Slider extends VariableBar {
         }
     }
 
-    @NotNull
-    @Contract(pure = true)
-    @Override
-    public Slider copy() {
-        Slider slider = new Slider(x, y, length, height, getPriority());
-
-        applyContents(slider);
-
-        return slider;
-    }
-
     /**
      * Gets the value as a float in between (0,1) this bar is currently set at.
      *
      * @return the value
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public float getValue() {
         return value;

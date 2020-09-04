@@ -3,7 +3,6 @@ package com.github.despical.inventoryframework.pane.component;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.Contract;
@@ -22,8 +21,11 @@ import java.util.stream.Stream;
 
 /**
  * A button that toggles between an enabled and disabled state.
- *
- * @since 0.5.0
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class ToggleButton extends Pane {
 
@@ -85,12 +87,10 @@ public class ToggleButton extends Pane {
         int height = Math.min(this.height, maxHeight);
 
         int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
         int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -102,12 +102,12 @@ public class ToggleButton extends Pane {
             y = (slot / 9) - getY() - paneOffsetY;
         }
 
-        //this isn't our item
         if (x < 0 || x >= length || y < 0 || y >= height) {
             return false;
         }
 
-        callOnClick(event);
+        if (onClick != null)
+            onClick.accept(event);
 
         int newX = paneOffsetX + x;
         int newY = paneOffsetY + y;
@@ -125,30 +125,11 @@ public class ToggleButton extends Pane {
         return true;
     }
 
-    @NotNull
-    @Contract(pure = true)
-    @Override
-    public ToggleButton copy() {
-        ToggleButton toggleButton = new ToggleButton(x, y, length, height, getPriority());
-
-        toggleButton.setVisible(isVisible());
-        toggleButton.onClick = onClick;
-
-        toggleButton.uuid = uuid;
-
-        toggleButton.setEnabledItem(enabledPane.getItems().get(0).copy());
-        toggleButton.setDisabledItem(disabledPane.getItems().get(0).copy());
-
-        toggleButton.enabled = enabled;
-
-        return toggleButton;
-    }
-
     /**
      * Sets the item to use when the button is set to disabled
      *
      * @param item the disabled item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setDisabledItem(@NotNull GuiItem item) {
         disabledPane.clear();
@@ -160,7 +141,7 @@ public class ToggleButton extends Pane {
      * Sets the item to use when the button is set to enabled
      *
      * @param item the enabled item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setEnabledItem(@NotNull GuiItem item) {
         enabledPane.clear();
@@ -183,7 +164,7 @@ public class ToggleButton extends Pane {
     /**
      * Toggles between the enabled and disabled states
      *
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void toggle() {
         enabled = !enabled;
@@ -198,7 +179,7 @@ public class ToggleButton extends Pane {
      * @param instance the instance class
      * @param element the element
      * @return the toggle button
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @NotNull
     @Contract(pure = true)

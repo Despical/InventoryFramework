@@ -6,8 +6,11 @@ import org.w3c.dom.Element;
 
 /**
  * An interface for panes that can be flipped
- *
- * @since 0.3.0
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public interface Flippable {
 
@@ -15,7 +18,7 @@ public interface Flippable {
      * Sets whether this pane should flip its items horizontally
      *
      * @param flipHorizontally whether the pane should flip items horizontally
-     * @since 0.3.0
+     * @since 1.0.1
      */
     void flipHorizontally(boolean flipHorizontally);
 
@@ -23,7 +26,7 @@ public interface Flippable {
      * Sets whether this pane should flip its items vertically
      *
      * @param flipVertically whether the pane should flip items vertically
-     * @since 0.3.0
+     * @since 1.0.1
      */
     void flipVertically(boolean flipVertically);
 
@@ -31,7 +34,7 @@ public interface Flippable {
      * Gets whether this pane's items are flipped horizontally
      *
      * @return true if the items are flipped horizontally, false otherwise
-     * @since 0.3.0
+     * @since 1.0.1
      */
     @Contract(pure = true)
     boolean isFlippedHorizontally();
@@ -40,7 +43,7 @@ public interface Flippable {
      * Gets whether this pane's items are flipped vertically
      *
      * @return true if the items are flipped vertically, false otherwise
-     * @since 0.3.0
+     * @since 1.0.1
      */
     @Contract(pure = true)
     boolean isFlippedVertically();
@@ -51,7 +54,7 @@ public interface Flippable {
      *
      * @param flippable the flippable pane's elements to be applied
      * @param element the XML element for this pane
-     * @since 0.3.0
+     * @since 1.0.1
      */
     static void load(@NotNull Flippable flippable, @NotNull Element element) {
         if (element.hasAttribute("flipHorizontally"))

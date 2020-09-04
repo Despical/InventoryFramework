@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.Despical</groupId>
 	<artifactId>InventoryFramework</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-    <name>Inventory Framework</name>
-    <description>An inventory framework for managing GUIs</description>
-    <url>https://github.com/Despical/InventoryFramework</url>
+	<name>Inventory Framework</name>
+	<description>An inventory framework for managing GUIs</description>
+	<url>https://github.com/Despical/InventoryFramework</url>
 
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<licenses>
 		<license>
@@ -68,6 +68,12 @@
 			<artifactId>annotations</artifactId>
 			<version>19.0.0</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.I-Al-Istannen</groupId>
+			<artifactId>MiniNBT</artifactId>
+			<version>master-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>

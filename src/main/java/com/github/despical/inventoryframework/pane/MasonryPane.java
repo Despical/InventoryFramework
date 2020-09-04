@@ -2,9 +2,7 @@ package com.github.despical.inventoryframework.pane;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,7 +22,10 @@ import java.util.stream.Collectors;
  * isn't always preserved. If there is a gap left in which a pane with a higher index can fit, it will be put there,
  * even if there are panes with a lower index after it. Panes that do not fit will not be displayed.
  *
- * @since 0.3.0
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class MasonryPane extends Pane implements Orientable {
 
@@ -71,7 +72,6 @@ public class MasonryPane extends Pane implements Orientable {
                 outerLoop:
                 for (int y = 0; y < height; y++) {
                     for (int x = 0; x < length; x++) {
-                        //check whether the pane fits
                         boolean fits = true;
 
                         paneFits:
@@ -111,7 +111,6 @@ public class MasonryPane extends Pane implements Orientable {
                 outerLoop:
                 for (int x = 0; x < length; x++) {
                     for (int y = 0; y < height; y++) {
-                        //check whether the pane fits
                         boolean fits = true;
 
                         paneFits:
@@ -158,12 +157,10 @@ public class MasonryPane extends Pane implements Orientable {
         int height = Math.min(this.height, maxHeight);
 
         int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
         int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -178,7 +175,8 @@ public class MasonryPane extends Pane implements Orientable {
         if (x < 0 || x >= length || y < 0 || y >= height)
             return false;
 
-        callOnClick(event);
+        if (onClick != null)
+            onClick.accept(event);
 
         boolean success = false;
 
@@ -190,30 +188,11 @@ public class MasonryPane extends Pane implements Orientable {
         return success;
     }
 
-    @NotNull
-	@Contract(pure = true)
-	@Override
-    public MasonryPane copy() {
-		MasonryPane masonryPane = new MasonryPane(x, y, length, height, getPriority());
-
-		for (Pane pane : panes) {
-            masonryPane.addPane(pane.copy());
-        }
-
-        masonryPane.setVisible(isVisible());
-		masonryPane.onClick = onClick;
-		masonryPane.orientation = orientation;
-
-		masonryPane.uuid = uuid;
-
-		return masonryPane;
-	}
-
     /**
      * Adds a pane to this masonry pane
      *
      * @param pane the pane to add
-     * @since 0.3.0
+     * @since 1.0.1
      */
     public void addPane(@NotNull Pane pane) {
         panes.add(pane);

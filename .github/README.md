@@ -15,7 +15,7 @@ To add this project as a dependency to your pom.xml, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 The project is in the Central Repository, so specifying a repository is not needed.
@@ -30,7 +30,7 @@ Now in order to shade the project into your project, add the following to your p
         <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
         <relocations>
             <relocation>
-                <pattern>com.github.Despical.inventoryframework</pattern>
+                <pattern>com.github.despical.inventoryframework</pattern>
                 <shadedPattern>[YOUR PACKAGE].inventoryframework</shadedPattern>
             </relocation>
         </relocations>
@@ -51,7 +51,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:1.0.0'
+    compile 'com.github.Despical:InventoryFramework:1.0.1'
     // ...
 }
 ```
@@ -69,7 +69,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 To relocate the project's classes to your own namespace, add the following, with [YOUR PACKAGE] being the top-level package of your project:
 ```Groovy
 shadowJar {
-    relocate 'com.github.Despical', '[YOUR PACKAGE].inventoryframework'
+    relocate 'com.github.despical', '[YOUR PACKAGE].inventoryframework'
 }
 ```
 
@@ -80,4 +80,4 @@ If you want to build this project from source, run the following from Git Bash:
     cd InventoryFramework
     mvn clean package
 
-The build can then be found in /InventoryFramework/target/.
+The build can then be found in /InventoryFramework/target/

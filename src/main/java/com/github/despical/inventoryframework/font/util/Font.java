@@ -14,7 +14,10 @@ import java.util.Map;
 /**
  * An interface for fonts
  *
- * @since 0.5.0
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public abstract class Font {
 
@@ -193,7 +196,7 @@ public abstract class Font {
      * Gets a default item for characters that do not have a dedicated item
      *
      * @return the default item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @NotNull
     @Contract(pure = true)
@@ -205,7 +208,7 @@ public abstract class Font {
      *
      * @param character the character to get an item from
      * @return the item
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @Nullable
     @Contract(pure = true)
@@ -217,7 +220,7 @@ public abstract class Font {
      *
      * @param name the name of the font
      * @return the font
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @Nullable
     @Contract(pure = true)
@@ -231,7 +234,7 @@ public abstract class Font {
      *
      * @param name the font name
      * @param font the font
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @Contract(pure = true)
     public static void registerFont(@NotNull String name, @NotNull Font font) {

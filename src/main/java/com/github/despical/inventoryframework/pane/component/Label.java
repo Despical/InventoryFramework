@@ -14,8 +14,11 @@ import com.github.despical.inventoryframework.pane.*;
 
 /**
  * A label for displaying text.
- *
- * @since 0.5.0
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class Label extends OutlinePane {
 
@@ -40,7 +43,7 @@ public class Label extends OutlinePane {
      * @param height the height
      * @param priority the priority
      * @param font the character set
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public Label(int x, int y, int length, int height, @NotNull Priority priority, @NotNull Font font) {
         this(x, y, length, height, font);
@@ -56,7 +59,7 @@ public class Label extends OutlinePane {
      * @param length the length
      * @param height the height
      * @param font the character set
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public Label(int x, int y, int length, int height, @NotNull Font font) {
         this(length, height, font);
@@ -71,7 +74,7 @@ public class Label extends OutlinePane {
      * @param length the length
      * @param height the height
      * @param font the character set
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public Label(int length, int height, @NotNull Font font) {
         super(length, height);
@@ -84,7 +87,7 @@ public class Label extends OutlinePane {
      * Sets the text to be displayed in this label
      *
      * @param text the new text
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setText(@NotNull String text) {
         this.text = text;
@@ -110,33 +113,6 @@ public class Label extends OutlinePane {
         }
     }
 
-    @NotNull
-    @Contract(pure = true)
-    @Override
-    public Label copy() {
-        Label label = new Label(x, y, length, height, getPriority(), font);
-
-        for (GuiItem item : getItems()) {
-            label.addItem(item.copy());
-        }
-
-        label.setVisible(isVisible());
-        label.onClick = onClick;
-
-        label.setOrientation(getOrientation());
-        label.setRotation(getRotation());
-        label.setGap(getGap());
-        label.setRepeat(doesRepeat());
-        label.flipHorizontally(isFlippedHorizontally());
-        label.flipVertically(isFlippedVertically());
-        label.applyMask(getMask());
-        label.uuid = uuid;
-
-        label.text = text;
-
-        return label;
-    }
-
     @Override
     public boolean click(@NotNull Gui gui, @NotNull InventoryClickEvent event, int paneOffsetX, int paneOffsetY,
                          int maxLength, int maxHeight) {
@@ -149,7 +125,7 @@ public class Label extends OutlinePane {
      * Gets the text currently displayed in this label
      *
      * @return the text in this label
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @Contract(pure = true)
     @NotNull
@@ -161,7 +137,7 @@ public class Label extends OutlinePane {
      * Gets the character set currently used for the text in this label
      *
      * @return the character set
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @Contract(pure = true)
     @NotNull

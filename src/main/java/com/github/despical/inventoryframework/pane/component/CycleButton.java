@@ -2,9 +2,7 @@ package com.github.despical.inventoryframework.pane.component;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.PlayerInventory;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,8 +18,11 @@ import java.util.stream.Collectors;
 
 /**
  * A button for cycling between different options
- *
- * @since 0.5.0
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class CycleButton extends Pane {
 
@@ -54,12 +55,10 @@ public class CycleButton extends Pane {
         int height = Math.min(this.height, maxHeight);
 
         int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
         int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -71,12 +70,12 @@ public class CycleButton extends Pane {
             y = (slot / 9) - getY() - paneOffsetY;
         }
 
-        //this isn't our item
         if (x < 0 || x >= length || y < 0 || y >= height) {
             return false;
         }
 
-        callOnClick(event);
+        if (onClick != null)
+            onClick.accept(event);
 
         panes.get(position).click(gui, event, paneOffsetX + x, paneOffsetY + y, length, height);
 
@@ -104,26 +103,6 @@ public class CycleButton extends Pane {
     }
 
     @NotNull
-    @Contract(pure = true)
-    @Override
-    public CycleButton copy() {
-        CycleButton cycleButton = new CycleButton(x, y, length, height, getPriority());
-
-        for (Pane pane : panes) {
-            cycleButton.addPane(pane);
-        }
-
-        cycleButton.setVisible(isVisible());
-        cycleButton.onClick = onClick;
-
-        cycleButton.position = position;
-
-        cycleButton.uuid = uuid;
-
-        return cycleButton;
-    }
-
-    @NotNull
     @Override
     public Collection<GuiItem> getItems() {
         return getPanes().stream().flatMap(pane -> pane.getItems().stream()).collect(Collectors.toList());
@@ -134,7 +113,7 @@ public class CycleButton extends Pane {
      *
      * @param index the index to insert the pane at
      * @param pane the pane to add
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void addPane(int index, @NotNull Pane pane) {
         panes.add(index, pane);
@@ -144,7 +123,7 @@ public class CycleButton extends Pane {
      * Adds a pane to the current list of options
      *
      * @param pane the pane to add
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void addPane(@NotNull Pane pane) {
         panes.add(pane);
@@ -164,7 +143,7 @@ public class CycleButton extends Pane {
     /**
      * Cycles through one option, making it go to the next one
      *
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void cycle() {
         position++;
@@ -176,7 +155,7 @@ public class CycleButton extends Pane {
      * @param instance the instance class
      * @param element the element
      * @return the cycle button
-     * @since 0.5.0
+     * @since 1.0.1
      */
     @NotNull
     public static CycleButton load(@NotNull Object instance, @NotNull Element element) {

@@ -2,7 +2,6 @@ package com.github.despical.inventoryframework.pane;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.jetbrains.annotations.Contract;
@@ -22,6 +21,11 @@ import java.util.function.Consumer;
 
 /**
  * A pane for static items and stuff. All items will have to be specified a slot, or will be added in the next position.
+ * 
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class StaticPane extends Pane implements Flippable, Rotatable {
 
@@ -81,17 +85,10 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 			Map.Entry<Integer, Integer> coordinates = GeometryUtil.processClockwiseRotation(x, y, length, height,
 				rotation);
 
-			x = coordinates.getKey();
-			y = coordinates.getValue();
-
-			if (x < 0 || x >= length || y < 0 || y >= height) {
-			    return;
-            }
-
 			ItemStack item = entry.getValue().getItem();
 
-			int finalRow = getY() + y + paneOffsetY;
-			int finalColumn = getX() + x + paneOffsetX;
+			int finalRow = getY() + coordinates.getValue() + paneOffsetY;
+			int finalColumn = getX() + coordinates.getKey() + paneOffsetX;
 
 			if (finalRow >= gui.getRows()) {
 			    gui.setState(Gui.State.BOTTOM);
@@ -125,7 +122,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
      * Removes the specified item from the pane
      *
      * @param item the item to remove
-     * @since 0.5.8
+     * @since 1.0.1
      */
     public void removeItem(@NotNull GuiItem item) {
         items.values().removeIf(guiItem -> guiItem.equals(item));
@@ -138,12 +135,10 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 		int height = Math.min(this.height, maxHeight);
 
 		int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
-        int x, y;
+		int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -155,11 +150,11 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
             y = (slot / 9) - getY() - paneOffsetY;
         }
 
-		//this isn't our item
 		if (x < 0 || x >= length || y < 0 || y >= height)
 			return false;
 
-		callOnClick(event);
+        if (onClick != null)
+            onClick.accept(event);
 
         ItemStack itemStack = event.getCurrentItem();
 
@@ -173,36 +168,12 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
             return false;
         }
 
-        clickedItem.callAction(event);
+        clickedItem.getAction().accept(event);
 
         return true;
 	}
 
-    @NotNull
-    @Contract(pure = true)
 	@Override
-    public StaticPane copy() {
-        StaticPane staticPane = new StaticPane(x, y, length, height, getPriority());
-
-        for (Map.Entry<Map.Entry<Integer, Integer>, GuiItem> entry : items.entrySet()) {
-            Map.Entry<Integer, Integer> coordinates = entry.getKey();
-
-            staticPane.addItem(entry.getValue().copy(), coordinates.getKey(), coordinates.getValue());
-        }
-
-        staticPane.setVisible(isVisible());
-        staticPane.onClick = onClick;
-
-        staticPane.uuid = uuid;
-
-        staticPane.rotation = rotation;
-        staticPane.flipHorizontally = flipHorizontally;
-        staticPane.flipVertically = flipVertically;
-
-        return staticPane;
-    }
-
-    @Override
 	public void setRotation(int rotation) {
 		if (length != height) {
 			throw new UnsupportedOperationException("length and height are different");
@@ -219,7 +190,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 	 *
 	 * @param itemStack The {@link ItemStack} to fill the empty space with
 	 * @param action    The action called whenever an interaction with the item happens
-     * @since 0.5.9
+     * @since 1.0.1
 	 */
 	public void fillWith(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
 		//The non empty spots
@@ -247,7 +218,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 	 * Fills all empty space in the pane with the given {@code itemStack}
 	 *
 	 * @param itemStack The {@link ItemStack} to fill the empty space with
-     * @since 0.2.4
+     * @since 1.0.1
 	 */
 	@Contract("null -> fail")
 	public void fillWith(@NotNull ItemStack itemStack) {

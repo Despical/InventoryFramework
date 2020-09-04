@@ -1,8 +1,6 @@
 package com.github.despical.inventoryframework.pane.component;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
@@ -17,7 +15,10 @@ import com.github.despical.inventoryframework.pane.component.util.VariableBar;
 /**
  * A percentage bar for a graphical interface into what amount of a whole is set.
  *
- * @since 0.5.0
+ * @author Despical
+ * @since 1.0.1
+ * <p>
+ * Created at 04.09.2020
  */
 public class PercentageBar extends VariableBar {
 
@@ -40,12 +41,10 @@ public class PercentageBar extends VariableBar {
         int height = Math.min(this.height, maxHeight);
 
         int slot = event.getSlot();
-        InventoryView view = event.getView();
-        Inventory inventory = view.getInventory(event.getRawSlot());
 
         int x, y;
 
-        if (inventory != null && inventory.equals(view.getBottomInventory())) {
+        if (Gui.getInventory(event.getView(), event.getRawSlot()).equals(event.getView().getBottomInventory())) {
             x = (slot % 9) - getX() - paneOffsetX;
             y = ((slot / 9) + gui.getRows() - 1) - getY() - paneOffsetY;
 
@@ -61,7 +60,9 @@ public class PercentageBar extends VariableBar {
             return false;
         }
 
-        callOnClick(event);
+        if (onClick != null) {
+            onClick.accept(event);
+        }
 
         event.setCancelled(true);
 
@@ -78,7 +79,7 @@ public class PercentageBar extends VariableBar {
      *
      * @param percentage the new percentage.
      * @throws IllegalArgumentException when the percentage is out of range
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public void setPercentage(float percentage) {
         if (percentage < 0 || percentage > 1) {
@@ -104,22 +105,11 @@ public class PercentageBar extends VariableBar {
         }
     }
 
-    @NotNull
-    @Contract(pure = true)
-    @Override
-    public PercentageBar copy() {
-        PercentageBar percentageBar = new PercentageBar(x, y, length, height, getPriority());
-
-        applyContents(percentageBar);
-
-        return percentageBar;
-    }
-
     /**
      * Gets the percentage as a float in between (0,1) this bar is currently set at.
      *
      * @return the percentage
-     * @since 0.5.0
+     * @since 1.0.1
      */
     public float getPercentage() {
         return value;
