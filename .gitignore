@@ -1,0 +1,7 @@
+#################
+out
+.idea
+target
+IF-Test
+*.iml
+*.txt
