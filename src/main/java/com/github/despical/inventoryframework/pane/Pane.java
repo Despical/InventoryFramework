@@ -500,6 +500,11 @@ public abstract class Pane {
     @Contract(pure = true)
     protected static <T extends GuiItem> T findMatchingItem(@NotNull Collection<T> items, @NotNull ItemStack item) {
         return items.stream().filter(guiItem -> {
+        	
+        	if (item.getType() == Material.AIR) {
+        		return false;
+        	}
+        	
             NBTWrappers.NBTTagCompound tag = ItemNBTUtil.getTag(item);
 
             if (tag == null) {
