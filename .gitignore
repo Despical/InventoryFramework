@@ -1,7 +1,7 @@
-#################
-out
-.idea
 target
-IF-Test
 *.iml
 *.txt
+/bin/
+.settings
+.classpath
+.project
