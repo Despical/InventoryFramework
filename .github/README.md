@@ -15,7 +15,7 @@ To add this project as a dependency to your pom.xml, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.1-SNAPSHOT</version>
 </dependency>
 ```
 The project is in the Central Repository, so specifying a repository is not needed.
