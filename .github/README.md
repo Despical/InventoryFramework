@@ -51,7 +51,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:1.0.1'
+    compile 'com.github.Despical:InventoryFramework:1.0.1-SNAPSHOT'
     // ...
 }
 ```
