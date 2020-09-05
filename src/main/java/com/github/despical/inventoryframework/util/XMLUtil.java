@@ -30,6 +30,8 @@ public class XMLUtil {
      * @param instance the object instance
      * @param element the element
      * @param name the name of the attribute
+     * @param eventType event type of class
+     * @param <T> any object that is event
      * @return the consumer to be called on click
      */
     @Nullable
