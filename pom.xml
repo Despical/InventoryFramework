@@ -72,7 +72,7 @@
 		<dependency>
 			<groupId>com.github.I-Al-Istannen</groupId>
 			<artifactId>MiniNBT</artifactId>
-			<version>master-SNAPSHOT</version>
+			<version>e1a901d</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

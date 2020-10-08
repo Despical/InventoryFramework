@@ -160,16 +160,13 @@ public class Gui implements InventoryHolder {
     public void show(@NotNull HumanEntity humanEntity) {
         inventory.clear();
 
-        //set the state to the top, so in case there are no longer any bottom part panes, their inventory will be shown again
         setState(State.TOP);
 
         humanEntityCache.storeAndClear(humanEntity);
 
-        //initialize the inventory first
         panes.stream().filter(Pane::isVisible).forEach(pane -> pane.display(this, inventory,
             humanEntity.getInventory(), 0, 0, 9, getRows() + 4));
 
-        //ensure that the inventory is cached before being overwritten and restore it if we end up not needing the bottom part after all
         if (state == State.TOP) {
             humanEntityCache.restoreAndForget(humanEntity);
         }
@@ -188,7 +185,6 @@ public class Gui implements InventoryHolder {
             throw new IllegalArgumentException("Rows should be between 1 and 6");
         }
 
-        //copy the viewers
         List<HumanEntity> viewers = getViewers();
 
         this.inventory = Bukkit.createInventory(this, rows * 9, getTitle());
