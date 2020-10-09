@@ -1,11 +1,12 @@
 package com.github.despical.inventoryframework;
 
+import com.github.despical.inventoryframework.pane.Pane;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -13,8 +14,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-
-import com.github.despical.inventoryframework.pane.Pane;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -120,12 +119,8 @@ public class GuiListener implements Listener {
      * @since 1.0.3
      */
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    public void onEntityPickupItem(@NotNull EntityPickupItemEvent event) {
-        if (!(event.getEntity() instanceof HumanEntity)) {
-            return;
-        }
-
-        InventoryHolder holder = ((HumanEntity) event.getEntity()).getOpenInventory().getTopInventory().getHolder();
+    public void onEntityPickupItem(@NotNull PlayerPickupItemEvent event) {
+        InventoryHolder holder = event.getPlayer().getOpenInventory().getTopInventory().getHolder();
 
         if (!(holder instanceof Gui)) {
             return;
@@ -137,7 +132,7 @@ public class GuiListener implements Listener {
             return;
         }
 
-        int leftOver = gui.getHumanEntityCache().add((HumanEntity) event.getEntity(), event.getItem().getItemStack());
+        int leftOver = gui.getHumanEntityCache().add(event.getPlayer(), event.getItem().getItemStack());
 
         if (leftOver == 0) {
             event.getItem().remove();
