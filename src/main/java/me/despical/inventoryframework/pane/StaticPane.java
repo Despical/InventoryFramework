@@ -218,50 +218,49 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 	 * @param itemStack The {@link ItemStack} to fill the empty space with
 	 * @since 1.0.1
 	 */
-	@Contract("null -> fail")
 	public void fillWith(@NotNull ItemStack itemStack) {
 		this.fillWith(itemStack, null);
 	}
 
 	/**
-	 * Fills specified row line vertically with given {@code itemStack}
+	 * Fills specified row line horizontally with given {@code itemStack}
 	 *
 	 * @param itemStack The {@link ItemStack} to fill the empty space with
 	 * @param line      Line to fill with {@code itemStack}
 	 * @param action    The action called whenever an interaction with the item happens
 	 * @since 1.0.5
 	 */
-	public void fillVerticallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
+	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
 		Set<Map.Entry<Integer, Integer>> locations = this.items.keySet();
+		boolean found = false;
 
 		for (int y = 0; y < this.getHeight(); y++) {
-			for (x = line; x < this.getLength(); x += 10) {
-				boolean found = false;
-
+			for (int x = 0; x < this.getLength(); x++) {
 				for (Map.Entry<Integer, Integer> location : locations) {
 					if (location.getKey() == x && location.getValue() == y) {
 						found = true;
 						break;
 					}
 				}
+			}
+		}
 
-				if (!found) {
-					this.addItem(new GuiItem(itemStack, action), x, y);
-				}
+		if (!found) {
+			for (int x = 0; x < this.getLength(); x++) {
+				this.addItem(new GuiItem(itemStack, action), x, line);
 			}
 		}
 	}
 
 	/**
-	 * Fills specified row line vertically with given {@code itemStack}
+	 * Fills specified row line horizontally with given {@code itemStack}
 	 *
 	 * @param itemStack The {@link ItemStack} to fill the empty space with
 	 * @param line      Line to fill with {@code itemStack}
 	 * @since 1.0.5
 	 */
-	@Contract("null -> fail")
-	public void fillVerticallyWith(@NotNull ItemStack itemStack, int line) {
-		this.fillVerticallyWith(itemStack, line, null);
+	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line) {
+		this.fillHorizontallyWith(itemStack, line, null);
 	}
 
 	@NotNull
