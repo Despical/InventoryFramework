@@ -1,8 +1,7 @@
-### 1.0.5 Release (13.11.020)
+### 1.0.5 Release (13.11.2020 - 14.11.2020)
 * Added support for Minecraft 1.16.4
 * Added new methods to Static Pane.
-  * StaticPane#fillVerticallyWith method to fill vertical line with given item stack.
-  * StaticPane#fillHorizontallyWith method to fill horizontal line with given item stack. (Not implemented yet)
+  * StaticPane#fillHorizontallyWith method to fill horizontal line with given item stack.
 * Changed a package name - (Developer Alert)
    * com.github.despical.inventoryframework -> me.despical.inventoryframework
 
