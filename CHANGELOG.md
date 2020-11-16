@@ -1,3 +1,7 @@
+### 1.0.6 Release (16.11.2020)
+* Added Gui#onDrag consumer to handle InventoryDragEvent.
+* Fixed InventoryDragEvent issues in older versions of Minecraft.
+
 ### 1.0.5 Release (13.11.2020 - 14.11.2020)
 * Added support for Minecraft 1.16.4
 * Added new method to Static Pane.

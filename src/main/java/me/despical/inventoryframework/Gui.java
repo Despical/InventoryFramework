@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
@@ -94,7 +95,13 @@ public class Gui implements InventoryHolder {
     @Nullable
     private Consumer<InventoryClickEvent> onOutsideClick;
 
-    /**
+	/**
+	 * The consumer that will be called once a player drags any item in the gui or in their inventory
+	 */
+	@Nullable
+	private Consumer<InventoryDragEvent> onDrag;
+
+	/**
      * The consumer that will be called once a player closes the gui
      */
     @Nullable
@@ -500,7 +507,28 @@ public class Gui implements InventoryHolder {
         this.onTopClick = onLocalClick;
     }
 
-    /**
+	/**
+	 * Set the consumer that should be called whenever player drags item in this gui.
+	 *
+	 * @param onDrag the consumer that gets called
+	 */
+	public void setOnDrag(@Nullable Consumer<InventoryDragEvent> onDrag) {
+		this.onDrag = onDrag;
+	}
+
+	/**
+	 * Gets the global click event assigned to this gui, or null if there is no global click assigned.
+	 *
+	 * @return the global click
+	 * @since 1.0.6
+	 */
+	@Nullable
+	@Contract(pure = true)
+	public Consumer<InventoryDragEvent> getOnDrag() {
+		return onDrag;
+	}
+
+	/**
      * Set the consumer that should be called whenever this gui is closed.
      *
      * @param onClose the consumer that gets called

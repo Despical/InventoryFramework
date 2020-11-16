@@ -160,27 +160,12 @@ public class GuiListener implements Listener {
             return;
         }
 
-        Set<Integer> inventorySlots = event.getInventorySlots();
+		Gui gui = (Gui) event.getInventory().getHolder();
+		Consumer<InventoryDragEvent> onDrag = gui.getOnDrag();
 
-        if (inventorySlots.size() > 1) {
-            return;
-        }
-
-        InventoryView view = event.getView();
-        int index = inventorySlots.toArray(new Integer[0])[0];
-        InventoryType.SlotType slotType = view.getSlotType(index);
-
-        boolean even = event.getType() == DragType.EVEN;
-
-        ClickType clickType = even ? ClickType.LEFT : ClickType.RIGHT;
-        InventoryAction inventoryAction = even ? InventoryAction.PLACE_SOME : InventoryAction.PLACE_ONE;
-
-        InventoryClickEvent inventoryClickEvent = new InventoryClickEvent(view, slotType, index, clickType,
-            inventoryAction);
-
-        onInventoryClick(inventoryClickEvent);
-
-        event.setCancelled(inventoryClickEvent.isCancelled());
+		if (onDrag != null) {
+			onDrag.accept(event);
+		}
     }
 
     /**
