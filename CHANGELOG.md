@@ -1,5 +1,7 @@
-### 1.0.6 Release (16.11.2020)
+### 1.0.7 Release (17.11.2020)
 * Added StaticPane#getLocations method to get list of gui item locations.
+
+### 1.0.6 Release (16.11.2020)
 * Added Gui#onDrag consumer to handle InventoryDragEvent.
 * Fixed InventoryDragEvent issues in older versions of Minecraft.
 
