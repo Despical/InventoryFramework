@@ -269,6 +269,11 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 		return items.values();
 	}
 
+	@NotNull
+	public Set<Map.Entry<Integer, Integer>> getLocations() {
+		return items.keySet();
+	}
+
     @Override
     public void clear() {
         items.clear();
