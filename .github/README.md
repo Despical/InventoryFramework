@@ -8,14 +8,13 @@ Next to those panes, GUIs can also be created from XML files by simple loading t
 ## Want to contribute in this project?
 [**💣 Issues Reporting (Discord)**](https://discordapp.com/invite/Vhyy4HA)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[**❤ Make Donation**](https://www.patreon.com/despical)
 
-
 ## Maven dependency
 To add this project as a dependency to your pom.xml, add the following to your pom.xml:
 ```XML
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.8</version>
 </dependency>
 ```
 The project is in the Central Repository, so specifying a repository is not needed.
@@ -51,7 +50,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:1.0.6'
+    compile 'com.github.Despical:InventoryFramework:1.0.8'
     // ...
 }
 ```
@@ -76,8 +75,7 @@ shadowJar {
 ## Building from source
 If you want to build this project from source, run the following from Git Bash:
 
-    git clone https://github.com/Despical/InventoryFramework.git
-    cd InventoryFramework
+    git clone https://github.com/Despical/InventoryFramework.git && cd InventoryFramework
     mvn clean package
 
 The build can then be found in /InventoryFramework/target/
