@@ -175,10 +175,10 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 	@Override
 	public void setRotation(int rotation) {
 		if (length != height) {
-			throw new UnsupportedOperationException("length and height are different");
+			throw new UnsupportedOperationException("Length and height are different!");
 		}
 		if (rotation % 90 != 0) {
-			throw new IllegalArgumentException("rotation isn't divisible by 90");
+			throw new IllegalArgumentException("Rotation isn't divisible by 90!");
 		}
 
 		this.rotation = rotation % 360;

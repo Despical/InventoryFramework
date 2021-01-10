@@ -138,7 +138,7 @@ public class Gui implements InventoryHolder {
 
         this.panes = new ArrayList<>();
         this.inventory = Bukkit.createInventory(this, rows * 9, title);
-        this.title = title;
+        this.title = ChatColor.translateAlternateColorCodes('&', title);
 
         if (!hasRegisteredListeners) {
             Bukkit.getPluginManager().registerEvents(new GuiListener(plugin), plugin);
@@ -249,7 +249,7 @@ public class Gui implements InventoryHolder {
         List<HumanEntity> viewers = getViewers();
 
         this.inventory = Bukkit.createInventory(this, this.inventory.getSize(), title);
-        this.title = title;
+        this.title = ChatColor.translateAlternateColorCodes('&', title);
 
         viewers.forEach(humanEntity -> humanEntity.openInventory(inventory));
     }
@@ -392,6 +392,11 @@ public class Gui implements InventoryHolder {
             if (documentElement.hasAttribute("onClose")) {
                 gui.setOnClose(XMLUtil.loadOnEventAttribute(instance,
                         documentElement, InventoryCloseEvent.class, "onClose"));
+            }
+
+            if (documentElement.hasAttribute("onDrag")) {
+                gui.setOnDrag(XMLUtil.loadOnEventAttribute(instance,
+                        documentElement, InventoryDragEvent.class, "onDrag"));
             }
 
             if (documentElement.hasAttribute("populate")) {

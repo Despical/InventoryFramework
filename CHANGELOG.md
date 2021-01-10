@@ -1,3 +1,8 @@
+### 1.0.8 Release (10.01.2021)
+* Added `Gui#setOnDrag` as a tag to XML usage.
+* Added coloring to gui titles.
+* Changed some exception messages.
+
 ### 1.0.7 Release (17.11.2020)
 * Added StaticPane#getLocations method to get list of gui item locations.
 
@@ -9,7 +14,7 @@
 * Added support for Minecraft 1.16.4
 * Added new method to Static Pane.
   * StaticPane#fillHorizontallyWith method to fill horizontal line with given item stack.
-* Changed a package name - (Developer Alert)
+* Changed a package name - Developer Alert
    * com.github.despical.inventoryframework -> me.despical.inventoryframework
 
 ### 1.0.3 / 1.0.4 Release (08.10.2020)

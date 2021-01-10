@@ -28,8 +28,7 @@ public class GeometryUtil {
      */
     @NotNull
     @Contract(pure = true)
-    public static Map.Entry<Integer, Integer> processClockwiseRotation(int x, int y, int length, int height,
-                                                                       int rotation) {
+    public static Map.Entry<Integer, Integer> processClockwiseRotation(int x, int y, int length, int height, int rotation) {
         int newX = x, newY = y;
 
         if (rotation == 90) {
@@ -59,8 +58,7 @@ public class GeometryUtil {
      */
     @NotNull
     @Contract(pure = true)
-    public static Map.Entry<Integer, Integer> processCounterClockwiseRotation(int x, int y, int length, int height,
-                                                                              int rotation) {
+    public static Map.Entry<Integer, Integer> processCounterClockwiseRotation(int x, int y, int length, int height, int rotation) {
         return processClockwiseRotation(x, y, length, height, 360 - rotation);
     }
 }

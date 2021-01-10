@@ -92,7 +92,8 @@ public class PaginatedPane extends Pane {
      */
     public void setPage(int page) {
 		if (!panes.containsKey(page))
-			throw new ArrayIndexOutOfBoundsException("page outside range");
+			throw new ArrayIndexOutOfBoundsException("Page outside range!");
+
 		this.page = page;
     }
 
