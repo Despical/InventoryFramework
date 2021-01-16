@@ -79,3 +79,6 @@ If you want to build this project from source, run the following from Git Bash:
     mvn clean package
 
 The build can then be found in /InventoryFramework/target/
+
+## License
+Inventory Framework is free and open source software under the [The Unlicense](https://github.com/Despical/InventoryFramework/blob/master/LICENSE)
