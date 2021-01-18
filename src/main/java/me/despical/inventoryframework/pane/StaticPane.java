@@ -26,7 +26,7 @@ import java.util.function.Consumer;
  * <p>
  * Created at 04.09.2020
  */
-public class StaticPane extends Pane implements Flippable, Rotatable {
+public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 
 	/**
 	 * A map of locations inside this pane and their item. The locations are stored in a way where the x coordinate is
@@ -222,14 +222,6 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 		this.fillWith(itemStack, null);
 	}
 
-	/**
-	 * Fills specified row line horizontally with given {@code itemStack}
-	 *
-	 * @param itemStack The {@link ItemStack} to fill the empty space with
-	 * @param line      Line to fill with {@code itemStack}
-	 * @param action    The action called whenever an interaction with the item happens
-	 * @since 1.0.5
-	 */
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
 		Set<Map.Entry<Integer, Integer>> locations = this.items.keySet();
 		boolean found = false;
@@ -252,18 +244,35 @@ public class StaticPane extends Pane implements Flippable, Rotatable {
 		}
 	}
 
-	/**
-	 * Fills specified row line horizontally with given {@code itemStack}
-	 *
-	 * @param itemStack The {@link ItemStack} to fill the empty space with
-	 * @param line      Line to fill with {@code itemStack}
-	 * @since 1.0.5
-	 */
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line) {
 		this.fillHorizontallyWith(itemStack, line, null);
 	}
 
-	@NotNull
+    @Override
+    public void fillBorder(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
+        // Top
+        for (int i = 0; i < 9; i++)
+            this.addItem(new GuiItem(itemStack, action), i, 0);
+
+        // Bottom
+        for (int i = 0; i < 9; i++)
+            this.addItem(new GuiItem(itemStack, action), i, y - 1);
+
+        // Left
+        for (int i = 0; i < y * 9; i += 9)
+            this.addItem(new GuiItem(itemStack, action), 0, i % (y - 1));
+
+        // Right
+        for (int i = 8; i < y * 9; i += 9)
+            this.addItem(new GuiItem(itemStack, action), 8, i % (y - 1));
+    }
+
+    @Override
+    public void fillBorder(@NotNull ItemStack itemStack) {
+        this.fillBorder(itemStack, null);
+    }
+
+    @NotNull
 	@Override
 	public Collection<GuiItem> getItems() {
 		return items.values();

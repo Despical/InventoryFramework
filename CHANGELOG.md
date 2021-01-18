@@ -1,4 +1,6 @@
 ### 1.0.8 Release (10.01.2021)
+* Added `Fillable` interface that includes some filling methods.
+* Added `StaticPane#fillBorder` method to fill GUI's border.
 * Added `Gui#setOnDrag` as a tag to XML usage.
 * Added coloring to gui titles.
 * Changed some exception messages.
