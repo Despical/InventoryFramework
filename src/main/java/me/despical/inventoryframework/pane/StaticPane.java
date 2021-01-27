@@ -168,7 +168,6 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 		}
 
 		clickedItem.getAction().accept(event);
-
 		return true;
 	}
 
@@ -177,6 +176,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 		if (length != height) {
 			throw new UnsupportedOperationException("Length and height are different!");
 		}
+
 		if (rotation % 90 != 0) {
 			throw new IllegalArgumentException("Rotation isn't divisible by 90!");
 		}
@@ -206,7 +206,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 				}
 
 				if (!found) {
-					this.addItem(new GuiItem(itemStack, action), x, y);
+					addItem(new GuiItem(itemStack, action), x, y);
 				}
 			}
 		}
@@ -223,12 +223,11 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	}
 
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
-		Set<Map.Entry<Integer, Integer>> locations = this.items.keySet();
 		boolean found = false;
 
 		for (int y = 0; y < this.getHeight(); y++) {
 			for (int x = 0; x < this.getLength(); x++) {
-				for (Map.Entry<Integer, Integer> location : locations) {
+				for (Map.Entry<Integer, Integer> location : items.keySet()) {
 					if (location.getKey() == x && location.getValue() == y) {
 						found = true;
 						break;
@@ -239,7 +238,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 
 		if (!found) {
 			for (int x = 0; x < this.getLength(); x++) {
-				this.addItem(new GuiItem(itemStack, action), x, line);
+				addItem(new GuiItem(itemStack, action), x, line);
 			}
 		}
 	}
@@ -247,6 +246,33 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line) {
 		this.fillHorizontallyWith(itemStack, line, null);
 	}
+
+    @Override
+    public void fillVerticallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
+        boolean found = false;
+
+        for (int y = 0; y < this.getHeight(); y++) {
+            for (int x = 0; x < this.getLength(); x++) {
+                for (Map.Entry<Integer, Integer> location : items.keySet()) {
+                    if (location.getKey() == x && location.getValue() == y) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!found) {
+            for (int y = 0; y < this.getHeight(); y++) {
+                addItem(new GuiItem(itemStack, action), line, y);
+            }
+        }
+    }
+
+    @Override
+    public void fillVerticallyWith(@NotNull ItemStack itemStack, int line) {
+        this.fillVerticallyWith(itemStack, line, null);
+    }
 
     @Override
     public void fillBorder(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {

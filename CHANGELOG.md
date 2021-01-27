@@ -1,4 +1,5 @@
-### 1.0.8 Release (10.01.2021)
+### 1.0.8 Release (10.01.2021 - 27.01.2020)
+* Added new methods to fill a row line vertically with given item.
 * Added `Fillable` interface that includes some filling methods.
 * Added `StaticPane#fillBorder` method to fill GUI's border.
 * Added `Gui#setOnDrag` as a tag to XML usage.
