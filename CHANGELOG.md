@@ -1,4 +1,7 @@
-### 1.0.8 Release (10.01.2021 - 27.01.2020)
+### 1.0.9 Release (29.01.2021)
+* Now `StaticPane#fillHorizontallyWith` and `StaticPane#fillVerticallyWith` methods will fill the given area by skipping items if there are.
+
+### 1.0.8 Release (10.01.2021 - 27.01.2021)
 * Added new methods to fill a row line vertically with given item.
 * Added `Fillable` interface that includes some filling methods.
 * Added `StaticPane#fillBorder` method to fill GUI's border.

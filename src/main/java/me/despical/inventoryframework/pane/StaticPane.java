@@ -206,7 +206,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 				}
 
 				if (!found) {
-					addItem(new GuiItem(itemStack, action), x, y);
+                    this.addItem(new GuiItem(itemStack, action), x, y);
 				}
 			}
 		}
@@ -223,23 +223,14 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	}
 
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
-		boolean found = false;
+		for (int x = 0; x < this.getLength(); x++) {
+            for (Map.Entry<Integer, Integer> location : items.keySet()) {
+                if (location.getKey() == x && location.getValue() == line) {
+                    continue;
+                }
 
-		for (int y = 0; y < this.getHeight(); y++) {
-			for (int x = 0; x < this.getLength(); x++) {
-				for (Map.Entry<Integer, Integer> location : items.keySet()) {
-					if (location.getKey() == x && location.getValue() == y) {
-						found = true;
-						break;
-					}
-				}
-			}
-		}
-
-		if (!found) {
-			for (int x = 0; x < this.getLength(); x++) {
-				addItem(new GuiItem(itemStack, action), x, line);
-			}
+                this.addItem(new GuiItem(itemStack, action), x, line);
+            }
 		}
 	}
 
@@ -249,22 +240,13 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 
     @Override
     public void fillVerticallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
-        boolean found = false;
-
         for (int y = 0; y < this.getHeight(); y++) {
-            for (int x = 0; x < this.getLength(); x++) {
-                for (Map.Entry<Integer, Integer> location : items.keySet()) {
-                    if (location.getKey() == x && location.getValue() == y) {
-                        found = true;
-                        break;
-                    }
+            for (Map.Entry<Integer, Integer> location : items.keySet()) {
+                if (location.getKey() == line && location.getValue() == y) {
+                    continue;
                 }
-            }
-        }
 
-        if (!found) {
-            for (int y = 0; y < this.getHeight(); y++) {
-                addItem(new GuiItem(itemStack, action), line, y);
+                this.addItem(new GuiItem(itemStack, action), line, y);
             }
         }
     }
