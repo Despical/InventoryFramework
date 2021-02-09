@@ -223,15 +223,10 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	}
 
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
-		for (int x = 0; x < this.getLength(); x++) {
-            for (Map.Entry<Integer, Integer> location : items.keySet()) {
-                if (location.getKey() == x && location.getValue() == line) {
-                    continue;
-                }
-
-                this.addItem(new GuiItem(itemStack, action), x, line);
-            }
-		}
+        for (int x = 0; x < this.getLength(); x++) {
+			// Will override the item if there is
+        	this.addItem(new GuiItem(itemStack, action), x, line);
+        }
 	}
 
 	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line) {
@@ -240,16 +235,11 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 
     @Override
     public void fillVerticallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
-        for (int y = 0; y < this.getHeight(); y++) {
-            for (Map.Entry<Integer, Integer> location : items.keySet()) {
-                if (location.getKey() == line && location.getValue() == y) {
-                    continue;
-                }
-
-                this.addItem(new GuiItem(itemStack, action), line, y);
-            }
-        }
-    }
+		for (int y = 0; y < this.getHeight(); y++) {
+			// Will override the item if there is
+			this.addItem(new GuiItem(itemStack, action), line, y);
+		}
+	}
 
     @Override
     public void fillVerticallyWith(@NotNull ItemStack itemStack, int line) {
@@ -264,15 +254,15 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 
         // Bottom
         for (int i = 0; i < 9; i++)
-            this.addItem(new GuiItem(itemStack, action), i, y - 1);
+            this.addItem(new GuiItem(itemStack, action), i, this.getHeight() - 1);
 
         // Left
-        for (int i = 0; i < y * 9; i += 9)
-            this.addItem(new GuiItem(itemStack, action), 0, i % (y - 1));
+        for (int i = 0; i < this.getHeight(); i++)
+            this.addItem(new GuiItem(itemStack, action),0, i);
 
         // Right
-        for (int i = 8; i < y * 9; i += 9)
-            this.addItem(new GuiItem(itemStack, action), 8, i % (y - 1));
+        for (int i = 0; i < this.getHeight(); i++)
+            this.addItem(new GuiItem(itemStack, action), 8, i);
     }
 
     @Override

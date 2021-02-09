@@ -1,5 +1,7 @@
-### 1.0.9 Release (29.01.2021)
-* Now `StaticPane#fillHorizontallyWith` and `StaticPane#fillVerticallyWith` methods will fill the given area by skipping items if there are.
+### 1.0.9 Release (29.01.2021 - 09.02.2021)
+* Fixed `StaticPane#fillHorizontallyWith` andS `StaticPane#fillVerticallyWith` methods not working if there are no items registered.
+* Fixed `ArrayIndexOutOfBounds` while using `StaticPane#fillBorder` method.
+* ~~Now `StaticPane#fillHorizontallyWith` and `StaticPane#fillVerticallyWith` methods will fill the given area by skipping items if there are.~~
 
 ### 1.0.8 Release (10.01.2021 - 27.01.2021)
 * Added new methods to fill a row line vertically with given item.
