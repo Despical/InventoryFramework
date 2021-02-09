@@ -1,4 +1,5 @@
 # Inventory Framework
+[![](https://jitpack.io/v/Despical/InventoryFramework.svg)](https://jitpack.io/#Despical/InventoryFramework)
 [![](https://img.shields.io/badge/javadocs-latest-lime.svg)](https://javadoc.io/doc/com.github.Despical/InventoryFramework)
 [![](https://img.shields.io/badge/wiki-click-lime.svg)](https://github.com/Despical/InventoryFramework/wiki)
 [![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=discord)](https://discord.gg/Vhyy4HA)
@@ -107,5 +108,5 @@ If you want to build this project from source, run the following from Git Bash:
     git clone https://github.com/Despical/InventoryFramework.git && cd InventoryFramework
     mvn clean package
 
-The build can then be found in /InventoryFramework/target/
+The build can then be found in /InventoryFramework/target/<br>
 And also don't forget to install Maven before building.
