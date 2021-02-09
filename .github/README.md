@@ -3,6 +3,7 @@
 [![](https://img.shields.io/badge/javadocs-latest-lime.svg)](https://javadoc.io/doc/com.github.Despical/InventoryFramework)
 [![](https://img.shields.io/badge/wiki-click-lime.svg)](https://github.com/Despical/InventoryFramework/wiki)
 [![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=discord)](https://discord.gg/Vhyy4HA)
+
 An inventory framework for managing Minecraft GUIs.
 
 This framework is a fork of [InventoryFramework](https://github.com/stefvanschie/IF) that has multiple version support and some addition features. Still based on a pane principle. This means that the GUI is divided into different types of panes which all behave differently. A GUI consists of multiple panes which can interact with each other.
