@@ -588,7 +588,7 @@ public class Gui implements InventoryHolder {
      * @since 1.0.1
      */
     @Contract(pure = true)
-    protected boolean isUpdating() {
+    public boolean isUpdating() {
         return updating;
     }
 
