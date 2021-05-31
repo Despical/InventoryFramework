@@ -122,4 +122,12 @@ public class GuiItem {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
+
+    public static GuiItem of(@NotNull ItemStack itemStack) {
+        return of(itemStack, null);
+    }
+
+    public static GuiItem of(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
+        return new GuiItem(itemStack, action);
+    }
 }

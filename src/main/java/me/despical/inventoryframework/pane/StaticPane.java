@@ -193,6 +193,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	 */
 	public void fillWith(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
 		Set<Map.Entry<Integer, Integer>> locations = this.items.keySet();
+		GuiItem guiItem = GuiItem.of(itemStack, action);
 
 		for (int y = 0; y < this.getHeight(); y++) {
 			for (int x = 0; x < this.getLength(); x++) {
@@ -206,7 +207,7 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 				}
 
 				if (!found) {
-                    this.addItem(new GuiItem(itemStack, action), x, y);
+                    this.addItem(guiItem, x, y);
 				}
 			}
 		}
@@ -222,52 +223,40 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 		this.fillWith(itemStack, null);
 	}
 
-	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
+	@Override
+	public void fillHorizontallyWith(@NotNull GuiItem guiItem, int line) {
         for (int x = 0; x < this.getLength(); x++) {
 			// Will override the item if there is
-        	this.addItem(new GuiItem(itemStack, action), x, line);
+        	this.addItem(guiItem, x, line);
         }
 	}
 
-	public void fillHorizontallyWith(@NotNull ItemStack itemStack, int line) {
-		this.fillHorizontallyWith(itemStack, line, null);
-	}
-
     @Override
-    public void fillVerticallyWith(@NotNull ItemStack itemStack, int line, @Nullable Consumer<InventoryClickEvent> action) {
-		for (int y = 0; y < this.getHeight(); y++) {
+    public void fillVerticallyWith(@NotNull GuiItem guiItem, int line) {
+	    for (int y = 0; y < this.getHeight(); y++) {
 			// Will override the item if there is
-			this.addItem(new GuiItem(itemStack, action), line, y);
+			this.addItem(guiItem, line, y);
 		}
 	}
 
     @Override
-    public void fillVerticallyWith(@NotNull ItemStack itemStack, int line) {
-        this.fillVerticallyWith(itemStack, line, null);
+    public void fillBorder(@NotNull GuiItem guiItem) {
+        for (int slot : GeometryUtil.getBorders(this.getHeight())) {
+            this.addItem(guiItem, slot % 9, slot / 9);
+        }
     }
 
     @Override
-    public void fillBorder(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
-        // Top
-        for (int i = 0; i < 9; i++)
-            this.addItem(new GuiItem(itemStack, action), i, 0);
+    public void fillProgressBorder(@NotNull GuiItem full, @NotNull GuiItem empty, int progress) {
+        if (progress > 100) throw new IllegalArgumentException("Progress cannot be more than 100!");
 
-        // Bottom
-        for (int i = 0; i < 9; i++)
-            this.addItem(new GuiItem(itemStack, action), i, this.getHeight() - 1);
+        int[] borders = GeometryUtil.getBorders(this.getHeight());
+        int remaining = borders.length * progress / 100;
 
-        // Left
-        for (int i = 0; i < this.getHeight(); i++)
-            this.addItem(new GuiItem(itemStack, action),0, i);
-
-        // Right
-        for (int i = 0; i < this.getHeight(); i++)
-            this.addItem(new GuiItem(itemStack, action), 8, i);
-    }
-
-    @Override
-    public void fillBorder(@NotNull ItemStack itemStack) {
-        this.fillBorder(itemStack, null);
+        for (int i : borders) {
+			this.addItem(remaining > 0 ? full : empty, i % 9, i / 9);
+			if (remaining > 0) remaining--;
+		}
     }
 
     @NotNull

@@ -1,8 +1,8 @@
 # Inventory Framework
 [![](https://jitpack.io/v/Despical/InventoryFramework.svg)](https://jitpack.io/#Despical/InventoryFramework)
-[![](https://img.shields.io/badge/javadocs-latest-lime.svg)](https://javadoc.io/doc/com.github.Despical/InventoryFramework)
-[![](https://img.shields.io/badge/wiki-click-lime.svg)](https://github.com/Despical/InventoryFramework/wiki)
-[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=discord)](https://discord.gg/Vhyy4HA)
+[![](https://img.shields.io/badge/JavaDocs-latest-lime.svg)](https://javadoc.io/doc/com.github.Despical/InventoryFramework)
+[![](https://img.shields.io/badge/Wiki-click-lime.svg)](https://github.com/Despical/InventoryFramework/wiki)
+[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/Vhyy4HA)
 
 An inventory framework for managing Minecraft GUIs.
 
@@ -11,7 +11,7 @@ This framework is a fork of [InventoryFramework](https://github.com/stefvanschie
 Next to those panes, GUIs can also be created from XML files by simple loading them in. This allows for easy GUI creation with little code.
 
 ## Documentation
-More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [Javadoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed. Questions
+More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed. Questions
 related to the usage of Command Framework should be posted on my [Discord server](https://discord.com/invite/Vhyy4HA).
 
 ## Using Command Framework
@@ -29,7 +29,7 @@ To add this project as a dependency to your project, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -64,7 +64,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:1.0.9'
+    compile 'com.github.Despical:InventoryFramework:1.1.0'
     // ...
 }
 ```

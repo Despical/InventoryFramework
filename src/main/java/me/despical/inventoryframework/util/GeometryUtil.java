@@ -4,6 +4,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,5 +62,33 @@ public class GeometryUtil {
     @Contract(pure = true)
     public static Map.Entry<Integer, Integer> processCounterClockwiseRotation(int x, int y, int length, int height, int rotation) {
         return processClockwiseRotation(x, y, length, height, 360 - rotation);
+    }
+
+    @Contract(pure = true)
+    public static int xyToSlot(int x, int y) {
+        return y * 9 + x;
+    }
+
+    @Contract(pure = true)
+    public static int[] getBorders(int row) {
+		List<Integer> borders = new ArrayList<>();
+
+        for (int i = 0; i < 9; i++) {
+			borders.add(i);
+		}
+
+        for (int i = 1; i < row - 1; i++) {
+			borders.add(xyToSlot(8, i));
+		}
+
+		for (int i = 0; i < 9; i++) {
+			borders.add(xyToSlot(8 - i, row - 1));
+		}
+
+        for (int i = 1; i < row - 1; i++) {
+            borders.add(xyToSlot(0, row - i - 1));
+		}
+
+		return borders.stream().mapToInt(Integer::intValue).toArray();
     }
 }
