@@ -1,7 +1,7 @@
 package me.despical.inventoryframework;
 
-import me.ialistannen.mininbt.ItemNBTUtil;
-import me.ialistannen.mininbt.NBTWrappers;
+import me.despical.mininbt.ItemNBTUtil;
+import me.despical.mininbt.NBTWrappers;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Contract;
