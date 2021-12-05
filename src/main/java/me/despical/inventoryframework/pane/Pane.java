@@ -7,8 +7,7 @@ import me.despical.inventoryframework.exception.XMLLoadException;
 import me.despical.inventoryframework.exception.XMLReflectionException;
 import me.despical.inventoryframework.util.SkullUtil;
 import me.despical.inventoryframework.util.XMLUtil;
-import me.despical.mininbt.ItemNBTUtil;
-import me.despical.mininbt.NBTWrappers;
+import me.despical.mininbt.api.NBT;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -505,13 +504,13 @@ public abstract class Pane {
         		return false;
         	}
         	
-            NBTWrappers.NBTTagCompound tag = ItemNBTUtil.getTag(item);
+            NBT nbt = NBT.get(item);
 
-            if (tag == null) {
+            if (nbt == null) {
                 return false;
             }
 
-            String stringUUID = tag.getString("IF-uuid");
+            String stringUUID = nbt.getString("IF-uuid");
 
             return stringUUID != null && guiItem.getUUID().equals(UUID.fromString(stringUUID));
         }).findAny().orElse(null);

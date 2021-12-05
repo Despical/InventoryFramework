@@ -1,7 +1,6 @@
 package me.despical.inventoryframework;
 
-import me.despical.mininbt.ItemNBTUtil;
-import me.despical.mininbt.NBTWrappers;
+import me.despical.mininbt.api.NBT;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Contract;
@@ -54,11 +53,10 @@ public class GuiItem {
         this.action = action == null ? event -> {} : action;
         this.visible = true;
 
-        NBTWrappers.NBTTagCompound compound = ItemNBTUtil.getTag(item);
+        NBT nbt = NBT.get(item);
+        nbt.setString("IF-uuid", uuid.toString());
 
-        compound.setString("IF-uuid", uuid.toString());
-
-        this.item = ItemNBTUtil.setNBTTag(compound, item);
+        this.item = nbt.apply(item);
     }
 
     /**
