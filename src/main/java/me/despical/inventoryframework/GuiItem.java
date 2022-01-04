@@ -1,6 +1,6 @@
 package me.despical.inventoryframework;
 
-import me.despical.mininbt.api.NBT;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Contract;
@@ -52,11 +52,7 @@ public class GuiItem {
     public GuiItem(@NotNull ItemStack item, @Nullable Consumer<InventoryClickEvent> action) {
         this.action = action == null ? event -> {} : action;
         this.visible = true;
-
-        NBT nbt = NBT.get(item);
-        nbt.setString("IF-uuid", uuid.toString());
-
-        this.item = nbt.apply(item);
+        this.item = NBTEditor.set(item, "IF-uuid", uuid.toString());
     }
 
     /**

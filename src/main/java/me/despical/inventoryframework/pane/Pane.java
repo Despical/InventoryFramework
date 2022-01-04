@@ -1,13 +1,13 @@
 package me.despical.inventoryframework.pane;
 
 import com.google.common.primitives.Primitives;
+import io.github.bananapuncher714.nbteditor.NBTEditor;
 import me.despical.inventoryframework.Gui;
 import me.despical.inventoryframework.GuiItem;
 import me.despical.inventoryframework.exception.XMLLoadException;
 import me.despical.inventoryframework.exception.XMLReflectionException;
 import me.despical.inventoryframework.util.SkullUtil;
 import me.despical.inventoryframework.util.XMLUtil;
-import me.despical.mininbt.api.NBT;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -504,13 +504,7 @@ public abstract class Pane {
         		return false;
         	}
         	
-            NBT nbt = NBT.get(item);
-
-            if (nbt == null) {
-                return false;
-            }
-
-            String stringUUID = nbt.getString("IF-uuid");
+            String stringUUID = NBTEditor.getString(item, "IF-uuid");
 
             return stringUUID != null && guiItem.getUUID().equals(UUID.fromString(stringUUID));
         }).findAny().orElse(null);
