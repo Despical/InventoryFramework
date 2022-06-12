@@ -1,5 +1,6 @@
 package me.despical.inventoryframework;
 
+import de.tr7zw.changeme.nbtapi.utils.VersionChecker;
 import me.despical.inventoryframework.exception.XMLLoadException;
 import me.despical.inventoryframework.pane.*;
 import me.despical.inventoryframework.pane.component.*;
@@ -123,6 +124,10 @@ public class Gui implements InventoryHolder {
      * Whether listeners have ben registered by some gui
      */
     private static boolean hasRegisteredListeners;
+
+	static {
+		VersionChecker.hideOk = true;
+	}
 
     /**
      * Constructs a new GUI
