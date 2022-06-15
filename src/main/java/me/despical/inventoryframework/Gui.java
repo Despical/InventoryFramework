@@ -1,5 +1,6 @@
 package me.despical.inventoryframework;
 
+import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
 import de.tr7zw.changeme.nbtapi.utils.VersionChecker;
 import me.despical.inventoryframework.exception.XMLLoadException;
 import me.despical.inventoryframework.pane.*;
@@ -127,6 +128,8 @@ public class Gui implements InventoryHolder {
 
 	static {
 		VersionChecker.hideOk = true;
+		MinecraftVersion.disableUpdateCheck();
+		MinecraftVersion.disablePackageWarning();
 	}
 
     /**
