@@ -70,6 +70,11 @@ public class GeometryUtil {
     }
 
     @Contract(pure = true)
+    public static int[][] slotToXY(int slot) {
+		return new int[][] {{slot % 9, slot / 9}};
+	}
+
+    @Contract(pure = true)
     public static int[] getBorders(int row) {
 		List<Integer> borders = new ArrayList<>();
 
