@@ -130,6 +130,7 @@ public class Gui implements InventoryHolder {
 		VersionChecker.hideOk = true;
 		MinecraftVersion.disableUpdateCheck();
 		MinecraftVersion.disablePackageWarning();
+		MinecraftVersion.disableBStats();
 	}
 
     /**
@@ -145,11 +146,11 @@ public class Gui implements InventoryHolder {
         }
 
         this.panes = new ArrayList<>();
-        this.inventory = Bukkit.createInventory(this, rows * 9, title);
+        this.inventory = plugin.getServer().createInventory(this, rows * 9, title);
         this.title = ChatColor.translateAlternateColorCodes('&', title);
 
         if (!hasRegisteredListeners) {
-            Bukkit.getPluginManager().registerEvents(new GuiListener(plugin), plugin);
+            plugin.getServer().getPluginManager().registerEvents(new GuiListener(plugin), plugin);
 
             hasRegisteredListeners = true;
         }
