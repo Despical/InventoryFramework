@@ -7,10 +7,11 @@ An inventory framework for managing Minecraft GUIs.
 
 This framework is a fork of [InventoryFramework](https://github.com/stefvanschie/IF) that has multiple version support and some addition features. Still based on a pane principle. This means that the GUI is divided into different types of panes which all behave differently. A GUI consists of multiple panes which can interact with each other.
 
-Next to those panes, GUIs can also be created from XML files by simple loading them in. This allows for easy GUI creation with little code. Now supports 1.17 and 1.18 versions.
+Next to those panes, GUIs can also be created from XML files by simple loading them in. This allows for easy GUI creation with little code. Now we support Minecraft 1.17, 1.18 and 1.19 versions and also the upcoming versions when they are released.
 
 ## Documentation
-More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed.
+More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed. You can also join 
+our [Discord community](https://www.discord.gg/rVkaGmyszE) to get support.
 
 ## Using Command Framework
 The project isn't in the Central Repository yet, so specifying a repository is needed.<br>
