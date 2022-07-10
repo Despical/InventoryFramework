@@ -27,7 +27,7 @@ To add this project as a dependency to your project, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
 </dependency>
 ```
 
@@ -62,7 +62,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:2.2.0'
+    compile 'com.github.Despical:InventoryFramework:2.2.1'
     // ...
 }
 ```
@@ -92,13 +92,13 @@ I accept Pull Requests via GitHub. There are some guidelines which will make app
 + Respect the code style.
 + Create minimal diffs. If you feel the source code should be reformatted create a separate PR for this change.
 
-You can learn more about contributing via GitHub in [contribution guidelines](CONTRIBUTING.md).
+You can learn more about contributing via GitHub in [contribution guidelines](../CONTRIBUTING.md).
 
 ## Building from source
 If you want to build this project from source, run the following from Git Bash:
 
     git clone https://github.com/Despical/InventoryFramework.git && cd InventoryFramework
-    mvn clean package
+    mvn clean package -Dmaven.javadocs.skip=true -DskipTests
 
 The build can then be found in /InventoryFramework/target/<br>
 And also don't forget to install Maven before building.
