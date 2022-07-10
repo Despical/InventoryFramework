@@ -2,6 +2,7 @@
 [![](https://jitpack.io/v/Despical/InventoryFramework.svg)](https://jitpack.io/#Despical/InventoryFramework)
 [![](https://img.shields.io/badge/JavaDocs-latest-lime.svg)](https://javadoc.io/doc/com.github.Despical/InventoryFramework)
 [![](https://img.shields.io/badge/Wiki-click-lime.svg)](https://github.com/Despical/InventoryFramework/wiki)
+[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/rVkaGmyszE)
 
 An inventory framework for managing Minecraft GUIs.
 
