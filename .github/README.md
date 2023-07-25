@@ -2,7 +2,6 @@
 [![](https://jitpack.io/v/Despical/InventoryFramework.svg)](https://jitpack.io/#Despical/InventoryFramework)
 [![](https://img.shields.io/badge/JavaDocs-latest-lime.svg)](https://javadoc.io/doc/com.github.Despical/InventoryFramework)
 [![](https://img.shields.io/badge/Wiki-click-lime.svg)](https://github.com/Despical/InventoryFramework/wiki)
-[![Discord](https://img.shields.io/discord/719922452259668000.svg?color=lime&label=Discord)](https://discord.gg/rVkaGmyszE)
 
 An inventory framework for managing Minecraft GUIs.
 
@@ -11,8 +10,7 @@ This framework is a fork of [InventoryFramework](https://github.com/stefvanschie
 Next to those panes, GUIs can also be created from XML files by simple loading them in. This allows for easy GUI creation with little code. Now we support Minecraft 1.17, 1.18 and 1.19 versions and also the upcoming versions when they are released.
 
 ## Documentation
-More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed. You can also join 
-our [Discord community](https://www.discord.gg/rVkaGmyszE) to get support.
+More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed.
 
 ## Using Command Framework
 The project isn't in the Central Repository yet, so specifying a repository is needed.<br>
