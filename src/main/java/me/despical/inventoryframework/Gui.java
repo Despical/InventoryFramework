@@ -1,7 +1,5 @@
 package me.despical.inventoryframework;
 
-import de.tr7zw.changeme.nbtapi.utils.MinecraftVersion;
-import de.tr7zw.changeme.nbtapi.utils.VersionChecker;
 import me.despical.inventoryframework.exception.XMLLoadException;
 import me.despical.inventoryframework.pane.*;
 import me.despical.inventoryframework.pane.component.*;
@@ -125,13 +123,6 @@ public class Gui implements InventoryHolder {
      * Whether listeners have ben registered by some gui
      */
     private static boolean hasRegisteredListeners;
-
-	static {
-		VersionChecker.hideOk = true;
-		MinecraftVersion.disableUpdateCheck();
-		MinecraftVersion.disablePackageWarning();
-		MinecraftVersion.disableBStats();
-	}
 
     /**
      * Constructs a new GUI
@@ -293,7 +284,7 @@ public class Gui implements InventoryHolder {
      * stored inventories of the players and will assume no pane extends into the bottom inventory part. If the state is
      * set to bottom state it will assume one or more panes overflow into the bottom half of the inventory and will
      * store all players' inventories and clear those.
-     *
+     * <p>
      * Do not call this method if you just want the player's inventory to be cleared.
      *
      * @param state the new gui state
