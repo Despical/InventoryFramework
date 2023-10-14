@@ -27,7 +27,7 @@ To add this project as a dependency to your project, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>2.2.7</version>
+    <version>2.2.8</version>
 </dependency>
 ```
 
@@ -38,13 +38,22 @@ Now in order to shade the project into your project, add the following to your p
     <artifactId>maven-shade-plugin</artifactId>
     <version>3.2.2</version>
     <configuration>
-        <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+        <createDependencyReducedPom>false</createDependencyReducedPom>
         <relocations>
             <relocation>
                 <pattern>me.despical.inventoryframework</pattern>
                 <shadedPattern>[YOUR PACKAGE].inventoryframework</shadedPattern>
             </relocation>
         </relocations>
+        <!-- If you don't want to include fonts which are approximately 150 kbs -->
+        <filters>
+            <filter>
+                <artifact>*:*</artifact>
+                <excludes>
+                    <exclude>fonts/**</exclude>
+                </excludes>
+            </filter>
+        </filters>
     </configuration>
     <executions>
         <execution>
@@ -62,7 +71,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:2.2.7'
+    compile 'com.github.Despical:InventoryFramework:2.2.8'
     // ...
 }
 ```

@@ -90,7 +90,7 @@ public class Gui implements InventoryHolder {
     private Consumer<InventoryClickEvent> onGlobalClick;
 
     /**
-     * The consumer that will be called once a player clicks outside of the gui screen
+     * The consumer that will be called once a player clicks outside the gui screen
      */
     @Nullable
     private Consumer<InventoryClickEvent> onOutsideClick;
@@ -120,7 +120,7 @@ public class Gui implements InventoryHolder {
     private static final Map<String, BiFunction<Object, Element, Pane>> PANE_MAPPINGS = new HashMap<>();
 
     /**
-     * Whether listeners have ben registered by some gui
+     * Whether listeners have been registered by some gui
      */
     private static boolean hasRegisteredListeners;
 
@@ -137,8 +137,8 @@ public class Gui implements InventoryHolder {
         }
 
         this.panes = new ArrayList<>();
-        this.inventory = plugin.getServer().createInventory(this, rows * 9, title);
         this.title = ChatColor.translateAlternateColorCodes('&', title);
+        this.inventory = plugin.getServer().createInventory(this, rows * 9, title);
 
         if (!hasRegisteredListeners) {
             plugin.getServer().getPluginManager().registerEvents(new GuiListener(plugin), plugin);
