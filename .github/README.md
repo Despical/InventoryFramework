@@ -110,4 +110,5 @@ If you want to build this project from source, run the following from Git Bash:
     mvn clean package -Dmaven.javadocs.skip=true -DskipTests
 
 The build can then be found in /InventoryFramework/target/<br>
-And also don't forget to install Maven before building.
+> [!IMPORTANT]  
+> Don't forget to install Maven before building.
