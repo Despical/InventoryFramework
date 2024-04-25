@@ -10,7 +10,7 @@ This framework is a fork of [InventoryFramework](https://github.com/stefvanschie
 Next to those panes, GUIs can also be created from XML files by simple loading them in. This allows for easy GUI creation with little code. Now we support Minecraft 1.17, 1.18 and 1.19 versions and also the upcoming versions when they are released.
 
 ## Documentation
-More information will be found on the [wiki page](https://github.com/Despical/InventoryFramework/wiki) soon. The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed.
+The [JavaDoc](https://javadoc.jitpack.io/com/github/Despical/InventoryFramework/latest/javadoc/index.html) can be browsed.
 
 ## Using Command Framework
 The project isn't in the Central Repository yet, so specifying a repository is needed.<br>
