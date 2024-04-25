@@ -27,7 +27,7 @@ To add this project as a dependency to your project, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>InventoryFramework</artifactId>
-    <version>2.2.8</version>
+    <version>2.2.9</version>
 </dependency>
 ```
 
@@ -71,7 +71,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:2.2.8'
+    compile 'com.github.Despical:InventoryFramework:2.2.9'
     // ...
 }
 ```
