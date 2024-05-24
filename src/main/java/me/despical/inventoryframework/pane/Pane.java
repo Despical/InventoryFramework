@@ -1,7 +1,7 @@
 package me.despical.inventoryframework.pane;
 
 import com.google.common.primitives.Primitives;
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTItem;
 import me.despical.inventoryframework.Gui;
 import me.despical.inventoryframework.GuiItem;
 import me.despical.inventoryframework.exception.XMLLoadException;
