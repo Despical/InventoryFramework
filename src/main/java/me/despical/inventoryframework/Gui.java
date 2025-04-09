@@ -15,6 +15,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -179,6 +181,26 @@ public class Gui implements InventoryHolder {
 
         humanEntity.openInventory(inventory);
     }
+
+	/**
+	 * Closes the inventory in the next server tick for all viewers.
+	 */
+	public void close() {
+		JavaPlugin plugin = JavaPlugin.getProvidingPlugin(getClass());
+
+		plugin.getServer().getScheduler().runTask(plugin, this::closeInstantly);
+	}
+
+	/**
+	 * Closes the inventory for all viewers.
+	 */
+	public void closeInstantly() {
+		Iterator<HumanEntity> iterator = getViewers().iterator();
+
+		while (iterator.hasNext()) {
+			iterator.next().closeInventory();
+		}
+	}
 
     /**
      * Sets the amount of rows for this inventory.
