@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.Despical</groupId>
 	<artifactId>InventoryFramework</artifactId>
-	<version>2.3.6</version>
+	<version>2.3.7</version>
 	<packaging>jar</packaging>
 	<inceptionYear>2020</inceptionYear>
 
@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>com.github.Despical</groupId>
 			<artifactId>Item-NBT-API</artifactId>
-			<version>1.0.9</version>
+			<version>1.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
