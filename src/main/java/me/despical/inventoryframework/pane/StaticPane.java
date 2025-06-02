@@ -113,8 +113,20 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	 */
 	public void addItem(@NotNull GuiItem item, int x, int y) {
 		items.keySet().removeIf(entry -> entry.getKey() == x && entry.getValue() == y);
-
 		items.put(new AbstractMap.SimpleEntry<>(x, y), item);
+	}
+
+	/**
+	 * Adds a gui item at the specific spot in the pane. If the coordinates as specified by the x and y parameters is
+	 * already occupied, that item will be replaced by the item parameter.
+	 *
+	 * @param item the item to set
+	 * @param slot the slot of the item
+	 */
+	public void addItem(@NotNull GuiItem item, int slot) {
+		int[] xy = GeometryUtil.slotToXY(slot);
+
+		this.addItem(item, xy[0], xy[1]);
 	}
 
 	/**
@@ -136,6 +148,18 @@ public class StaticPane extends Pane implements Flippable, Rotatable, Fillable {
 	 */
 	public void removeItem(int x, int y) {
 		items.remove(new AbstractMap.SimpleEntry<>(x, y));
+	}
+
+	/**
+	 * Removes the specified item from the pane
+	 *
+	 * @param slot the slot of the item to remove
+	 * @since 1.0.1
+	 */
+	public void removeItem(int slot) {
+		int[] xy = GeometryUtil.slotToXY(slot);
+
+		items.remove(new AbstractMap.SimpleEntry<>(xy[0], xy[1]));
 	}
 
 	@Override
