@@ -139,7 +139,7 @@ public class Gui implements InventoryHolder {
 
 		this.panes = new ArrayList<>();
 		this.title = ChatColor.translateAlternateColorCodes('&', title);
-		this.inventory = plugin.getServer().createInventory(this, rows * 9, title);
+		this.inventory = plugin.getServer().createInventory(this, rows * 9, this.title);
 
 		if (!hasRegisteredListeners) {
 			plugin.getServer().getPluginManager().registerEvents(new GuiListener(plugin), plugin);
