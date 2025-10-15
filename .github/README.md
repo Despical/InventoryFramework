@@ -18,16 +18,10 @@ To add this project as a dependency to your project, add the following to your p
 
 ### Maven dependency
 ```xml
-<repository>
-    <id>jitpack.io</id>
-    <url>https://jitpack.io</url>
-</repository>
-```
-```xml
 <dependency>
     <groupId>com.github.Despical</groupId>
-    <artifactId>InventoryFramework</artifactId>
-    <version>2.4.0</version>
+    <artifactId>inventory-framework</artifactId>
+    <version>2.4.1</version>
 </dependency>
 ```
 
@@ -71,7 +65,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.Despical:InventoryFramework:2.4.0'
+    compile 'com.github.despical:inventory-framework:2.4.1'
     // ...
 }
 ```
@@ -106,8 +100,10 @@ You can learn more about contributing via GitHub in [contribution guidelines](..
 ## Building from source
 If you want to build this project from source, run the following from Git Bash:
 
-    git clone https://github.com/Despical/InventoryFramework.git && cd InventoryFramework
-    mvn clean package -Dmaven.javadocs.skip=true -DskipTests
+```
+git clone https://github.com/Despical/InventoryFramework.git && cd InventoryFramework
+mvn clean package -Dmaven.javadocs.skip=true -DskipTests
+```
 
 The build can then be found in /InventoryFramework/target/<br>
 > [!IMPORTANT]  
