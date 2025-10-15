@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * A button for cycling between different options
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -47,6 +47,49 @@ public class CycleButton extends Pane {
 
     public CycleButton(int length, int height) {
         super(length, height);
+    }
+
+    /**
+     * Loads a cycle button from a given element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the cycle button
+     * @since 1.0.1
+     */
+    @NotNull
+    public static CycleButton load(@NotNull Object instance, @NotNull Element element) {
+        int length;
+        int height;
+
+        try {
+            length = Integer.parseInt(element.getAttribute("length"));
+            height = Integer.parseInt(element.getAttribute("height"));
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+
+        CycleButton cycleButton = new CycleButton(length, height);
+
+        Pane.load(cycleButton, instance, element);
+
+        if (element.hasAttribute("populate")) {
+            return cycleButton;
+        }
+
+        NodeList childNodes = element.getChildNodes();
+
+        for (int j = 0; j < childNodes.getLength(); j++) {
+            Node pane = childNodes.item(j);
+
+            if (pane.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            cycleButton.addPane(Gui.loadPane(instance, pane));
+        }
+
+        return cycleButton;
     }
 
     @Override
@@ -113,7 +156,7 @@ public class CycleButton extends Pane {
      * Adds a pane to the current list of options
      *
      * @param index the index to insert the pane at
-     * @param pane the pane to add
+     * @param pane  the pane to add
      * @since 1.0.1
      */
     public void addPane(int index, @NotNull Pane pane) {
@@ -148,48 +191,5 @@ public class CycleButton extends Pane {
      */
     public void cycle() {
         position++;
-    }
-
-    /**
-     * Loads a cycle button from a given element
-     *
-     * @param instance the instance class
-     * @param element the element
-     * @return the cycle button
-     * @since 1.0.1
-     */
-    @NotNull
-    public static CycleButton load(@NotNull Object instance, @NotNull Element element) {
-        int length;
-        int height;
-
-        try {
-            length = Integer.parseInt(element.getAttribute("length"));
-            height = Integer.parseInt(element.getAttribute("height"));
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
-
-        CycleButton cycleButton = new CycleButton(length, height);
-
-        Pane.load(cycleButton, instance, element);
-
-        if (element.hasAttribute("populate")) {
-            return cycleButton;
-        }
-
-        NodeList childNodes = element.getChildNodes();
-
-        for (int j = 0; j < childNodes.getLength(); j++) {
-            Node pane = childNodes.item(j);
-
-            if (pane.getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-
-            cycleButton.addPane(Gui.loadPane(instance, pane));
-        }
-
-        return cycleButton;
     }
 }

@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 /**
  * A variable bar for UI elements that require some sort of bar
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -57,10 +57,8 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
         this.fillPane = new OutlinePane(x, y, 0, height);
         this.backgroundPane = new OutlinePane(x, y, length, height);
 
-        this.fillPane.addItem(new GuiItem(new ItemStack(Material.GREEN_STAINED_GLASS_PANE),
-            event -> event.setCancelled(true)));
-        this.backgroundPane.addItem(new GuiItem(new ItemStack(Material.RED_STAINED_GLASS_PANE),
-            event -> event.setCancelled(true)));
+        this.fillPane.addItem(new GuiItem(new ItemStack(Material.GREEN_STAINED_GLASS_PANE), event -> event.setCancelled(true)));
+        this.backgroundPane.addItem(new GuiItem(new ItemStack(Material.RED_STAINED_GLASS_PANE), event -> event.setCancelled(true)));
 
         this.fillPane.setRepeat(true);
         this.backgroundPane.setRepeat(true);
@@ -118,32 +116,14 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
     }
 
     @Override
-    public void setOrientation(@NotNull Orientation orientation) {
-        this.orientation = orientation;
-
-        if (orientation == Orientation.HORIZONTAL) {
-            fillPane.setLength(Math.round(getLength() * value));
-            fillPane.setHeight(getHeight());
-        } else if (orientation == Orientation.VERTICAL) {
-            fillPane.setLength(getLength());
-            fillPane.setHeight(Math.round(getHeight() * value));
-        } else {
-            throw new IllegalArgumentException("Unknown orientation");
-        }
-    }
-
-    @Override
-    public void display(@NotNull Gui gui, @NotNull Inventory inventory, @NotNull PlayerInventory playerInventory,
-						int paneOffsetX, int paneOffsetY, int maxLength, int maxHeight) {
+    public void display(@NotNull Gui gui, @NotNull Inventory inventory, @NotNull PlayerInventory playerInventory, int paneOffsetX, int paneOffsetY, int maxLength, int maxHeight) {
         int newPaneOffsetX = paneOffsetX + getX();
         int newPaneOffsetY = paneOffsetY + getY();
         int newMaxLength = Math.min(maxLength, getLength());
         int newMaxHeight = Math.min(maxHeight, getHeight());
 
-        this.backgroundPane.display(gui, inventory, playerInventory, newPaneOffsetX, newPaneOffsetY, newMaxLength,
-            newMaxHeight);
-        this.fillPane.display(gui, inventory, playerInventory, newPaneOffsetX, newPaneOffsetY, newMaxLength,
-            newMaxHeight);
+        this.backgroundPane.display(gui, inventory, playerInventory, newPaneOffsetX, newPaneOffsetY, newMaxLength, newMaxHeight);
+        this.fillPane.display(gui, inventory, playerInventory, newPaneOffsetX, newPaneOffsetY, newMaxLength, newMaxHeight);
     }
 
     @Override
@@ -215,6 +195,21 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
     }
 
     @Override
+    public void setOrientation(@NotNull Orientation orientation) {
+        this.orientation = orientation;
+
+        if (orientation == Orientation.HORIZONTAL) {
+            fillPane.setLength(Math.round(getLength() * value));
+            fillPane.setHeight(getHeight());
+        } else if (orientation == Orientation.VERTICAL) {
+            fillPane.setLength(getLength());
+            fillPane.setHeight(Math.round(getHeight() * value));
+        } else {
+            throw new IllegalArgumentException("Unknown orientation");
+        }
+    }
+
+    @Override
     public boolean isFlippedHorizontally() {
         return flipHorizontally;
     }
@@ -225,5 +220,6 @@ public abstract class VariableBar extends Pane implements Orientable, Flippable 
     }
 
     @Override
-    public void clear() {}
+    public void clear() {
+    }
 }

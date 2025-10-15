@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
 
 /**
  * A label for displaying text.
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -36,12 +36,12 @@ public class Label extends OutlinePane {
     /**
      * Creates a new label
      *
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param length the length
-     * @param height the height
+     * @param x        the x coordinate
+     * @param y        the y coordinate
+     * @param length   the length
+     * @param height   the height
      * @param priority the priority
-     * @param font the character set
+     * @param font     the character set
      * @since 1.0.1
      */
     public Label(int x, int y, int length, int height, @NotNull Priority priority, @NotNull Font font) {
@@ -53,11 +53,11 @@ public class Label extends OutlinePane {
     /**
      * Creates a new label
      *
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * @param x      the x coordinate
+     * @param y      the y coordinate
      * @param length the length
      * @param height the height
-     * @param font the character set
+     * @param font   the character set
      * @since 1.0.1
      */
     public Label(int x, int y, int length, int height, @NotNull Font font) {
@@ -72,7 +72,7 @@ public class Label extends OutlinePane {
      *
      * @param length the length
      * @param height the height
-     * @param font the character set
+     * @param font   the character set
      * @since 1.0.1
      */
     public Label(int length, int height, @NotNull Font font) {
@@ -80,68 +80,6 @@ public class Label extends OutlinePane {
 
         this.font = font;
         this.text = "";
-    }
-
-    /**
-     * Sets the text to be displayed in this label
-     *
-     * @param text the new text
-     * @since 1.0.1
-     */
-    public void setText(@NotNull String text) {
-        this.text = text;
-
-        clear();
-
-        for (char character : text.toCharArray()) {
-            ItemStack item = font.toItem(character);
-
-            if (item == null) {
-                item = font.toItem(Character.toUpperCase(character));
-            }
-
-            if (item == null) {
-                item = font.toItem(Character.toLowerCase(character));
-            }
-
-            if (item == null) {
-                item = font.getDefaultItem();
-            }
-
-            addItem(new GuiItem(item));
-        }
-    }
-
-    @Override
-    public boolean click(@NotNull Gui gui, @NotNull InventoryClickEvent event, int paneOffsetX, int paneOffsetY,
-                         int maxLength, int maxHeight) {
-        event.setCancelled(true);
-
-        return super.click(gui, event, paneOffsetX, paneOffsetY, maxLength, maxHeight);
-    }
-
-    /**
-     * Gets the text currently displayed in this label
-     *
-     * @return the text in this label
-     * @since 1.0.1
-     */
-    @Contract(pure = true)
-    @NotNull
-    public String getText() {
-        return text;
-    }
-
-    /**
-     * Gets the character set currently used for the text in this label
-     *
-     * @return the character set
-     * @since 1.0.1
-     */
-    @Contract(pure = true)
-    @NotNull
-    public Font getFont() {
-        return font;
     }
 
     /**
@@ -190,5 +128,67 @@ public class Label extends OutlinePane {
         }
 
         return label;
+    }
+
+    @Override
+    public boolean click(@NotNull Gui gui, @NotNull InventoryClickEvent event, int paneOffsetX, int paneOffsetY,
+                         int maxLength, int maxHeight) {
+        event.setCancelled(true);
+
+        return super.click(gui, event, paneOffsetX, paneOffsetY, maxLength, maxHeight);
+    }
+
+    /**
+     * Gets the text currently displayed in this label
+     *
+     * @return the text in this label
+     * @since 1.0.1
+     */
+    @Contract(pure = true)
+    @NotNull
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * Sets the text to be displayed in this label
+     *
+     * @param text the new text
+     * @since 1.0.1
+     */
+    public void setText(@NotNull String text) {
+        this.text = text;
+
+        clear();
+
+        for (char character : text.toCharArray()) {
+            ItemStack item = font.toItem(character);
+
+            if (item == null) {
+                item = font.toItem(Character.toUpperCase(character));
+            }
+
+            if (item == null) {
+                item = font.toItem(Character.toLowerCase(character));
+            }
+
+            if (item == null) {
+                item = font.getDefaultItem();
+            }
+
+            addItem(new GuiItem(item));
+        }
+    }
+
+    /**
+     * Gets the character set currently used for the text in this label
+     *
+     * @return the character set
+     * @since 1.0.1
+     */
+    @Contract(pure = true)
+    @NotNull
+    public Font getFont() {
+        return font;
     }
 }

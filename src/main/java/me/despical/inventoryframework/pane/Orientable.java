@@ -17,6 +17,21 @@ import java.util.Locale;
 public interface Orientable {
 
     /**
+     * Loads all elements regarding a {@link Orientable} {@link Pane} for the specified pane. The mutable pane contains
+     * the changes made.
+     *
+     * @param orientable the orientable pane's elements to be applied
+     * @param element    the XML element for this pane
+     * @since 1.0.1
+     */
+    static void load(@NotNull Orientable orientable, @NotNull Element element) {
+        if (element.hasAttribute("orientation")) {
+            orientable.setOrientation(Orientation.valueOf(element.getAttribute("orientation")
+                .toUpperCase(Locale.getDefault())));
+        }
+    }
+
+    /**
      * Gets the orientation of this outline pane
      *
      * @return the orientation
@@ -33,21 +48,6 @@ public interface Orientable {
      * @since 1.0.1
      */
     void setOrientation(@NotNull Orientation orientation);
-
-    /**
-     * Loads all elements regarding a {@link Orientable} {@link Pane} for the specified pane. The mutable pane contains
-     * the changes made.
-     *
-     * @param orientable the orientable pane's elements to be applied
-     * @param element the XML element for this pane
-     * @since 1.0.1
-     */
-    static void load(@NotNull Orientable orientable, @NotNull Element element) {
-        if (element.hasAttribute("orientation")) {
-            orientable.setOrientation(Orientation.valueOf(element.getAttribute("orientation")
-                .toUpperCase(Locale.getDefault())));
-        }
-    }
 
     /**
      * An orientation for outline panes

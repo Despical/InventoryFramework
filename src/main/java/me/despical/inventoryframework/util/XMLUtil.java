@@ -12,10 +12,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
+
 /**
- * 
+ *
  * An utility class for xml files
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -26,11 +27,11 @@ public class XMLUtil {
     /**
      * Loads an event consumer from the given instance and element
      *
-     * @param instance the object instance
-     * @param element the element
-     * @param name the name of the attribute
+     * @param instance  the object instance
+     * @param element   the element
+     * @param name      the name of the attribute
      * @param eventType event type of class
-     * @param <T> any object that is event
+     * @param <T>       any object that is event
      * @return the consumer to be called on click
      */
     @Nullable
@@ -47,7 +48,7 @@ public class XMLUtil {
             if (parameterCount == 0) {
                 eventParameter = false;
             } else if (parameterCount == 1 &&
-                    eventType.isAssignableFrom(method.getParameterTypes()[0])) {
+                eventType.isAssignableFrom(method.getParameterTypes()[0])) {
                 eventParameter = true;
             } else {
                 continue;
@@ -74,8 +75,8 @@ public class XMLUtil {
      * Sets a field from the given instance and element to the specified value
      *
      * @param instance the class instance the field is located in
-     * @param element the element from which the field is specified
-     * @param value the field's new value
+     * @param element  the element from which the field is specified
+     * @param value    the field's new value
      */
     public static void loadFieldAttribute(@NotNull Object instance, @NotNull Element element, @Nullable Object value) {
         try {

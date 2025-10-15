@@ -52,6 +52,46 @@ public class MasonryPane extends Pane implements Orientable {
         super(length, height);
     }
 
+    /**
+     * Loads a masonry pane from a given element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the masonry pane
+     */
+    @NotNull
+    public static MasonryPane load(@NotNull Object instance, @NotNull Element element) {
+        try {
+            MasonryPane masonryPane = new MasonryPane(
+                Integer.parseInt(element.getAttribute("length")),
+                Integer.parseInt(element.getAttribute("height"))
+            );
+
+            Pane.load(masonryPane, instance, element);
+            Orientable.load(masonryPane, element);
+
+            if (element.hasAttribute("populate")) {
+                return masonryPane;
+            }
+
+            NodeList childNodes = element.getChildNodes();
+
+            for (int j = 0; j < childNodes.getLength(); j++) {
+                Node pane = childNodes.item(j);
+
+                if (pane.getNodeType() != Node.ELEMENT_NODE) {
+                    continue;
+                }
+
+                masonryPane.addPane(Gui.loadPane(instance, pane));
+            }
+
+            return masonryPane;
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+    }
+
     @Override
     public void display(@NotNull Gui gui, @NotNull Inventory inventory, @NotNull PlayerInventory playerInventory,
                         int paneOffsetX, int paneOffsetY, int maxLength, int maxHeight) {
@@ -230,45 +270,5 @@ public class MasonryPane extends Pane implements Orientable {
     @Override
     public void setOrientation(@NotNull Orientation orientation) {
         this.orientation = orientation;
-    }
-
-    /**
-     * Loads a masonry pane from a given element
-     *
-     * @param instance the instance class
-     * @param element the element
-     * @return the masonry pane
-     */
-    @NotNull
-    public static MasonryPane load(@NotNull Object instance, @NotNull Element element) {
-        try {
-            MasonryPane masonryPane = new MasonryPane(
-                Integer.parseInt(element.getAttribute("length")),
-                Integer.parseInt(element.getAttribute("height"))
-            );
-
-            Pane.load(masonryPane, instance, element);
-            Orientable.load(masonryPane, element);
-
-            if (element.hasAttribute("populate")) {
-                return masonryPane;
-            }
-
-            NodeList childNodes = element.getChildNodes();
-
-            for (int j = 0; j < childNodes.getLength(); j++) {
-                Node pane = childNodes.item(j);
-
-                if (pane.getNodeType() != Node.ELEMENT_NODE) {
-                    continue;
-                }
-
-                masonryPane.addPane(Gui.loadPane(instance, pane));
-            }
-
-            return masonryPane;
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
     }
 }

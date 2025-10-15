@@ -38,7 +38,7 @@ public class CSVFont extends Font {
      * Creates a new default font
      *
      * @param defaultCharacter the default character to use when a requested character cannot be found
-     * @param filePath the relative file path to the csv file containing the character mappings
+     * @param filePath         the relative file path to the csv file containing the character mappings
      * @since 1.0.1
      */
     public CSVFont(char defaultCharacter, String filePath) {
@@ -46,7 +46,7 @@ public class CSVFont extends Font {
 
         try (InputStream inputStream = getClass().getResourceAsStream(filePath)) {
             characterMappings = CSVUtil.readAll(inputStream).stream()
-                    .collect(Collectors.toMap(v -> v[0].charAt(0), v -> SkullUtil.getSkull(v[1])));
+                .collect(Collectors.toMap(v -> v[0].charAt(0), v -> SkullUtil.getSkull(v[1])));
         } catch (IOException e) {
             throw new RuntimeException("Error loading CSV-based font: " + filePath, e);
         }

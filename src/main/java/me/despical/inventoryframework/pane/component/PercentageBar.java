@@ -33,6 +33,47 @@ public class PercentageBar extends VariableBar {
         super(length, height);
     }
 
+    /**
+     * Loads a percentage bar from a given element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the percentage bar
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static PercentageBar load(@NotNull Object instance, @NotNull Element element) {
+        int length;
+        int height;
+
+        try {
+            length = Integer.parseInt(element.getAttribute("length"));
+            height = Integer.parseInt(element.getAttribute("height"));
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+
+        PercentageBar percentageBar = new PercentageBar(length, height);
+
+        Pane.load(percentageBar, instance, element);
+        Orientable.load(percentageBar, element);
+        Flippable.load(percentageBar, element);
+
+        if (element.hasAttribute("populate")) {
+            return percentageBar;
+        }
+
+        if (element.hasAttribute("percentage")) {
+            try {
+                percentageBar.setPercentage(Float.parseFloat(element.getAttribute("percentage")));
+            } catch (IllegalArgumentException exception) {
+                throw new XMLLoadException(exception);
+            }
+        }
+
+        return percentageBar;
+    }
+
     @Override
     public boolean click(@NotNull Gui gui, @NotNull InventoryClickEvent event, int paneOffsetX, int paneOffsetY,
                          int maxLength, int maxHeight) {
@@ -73,6 +114,16 @@ public class PercentageBar extends VariableBar {
     }
 
     /**
+     * Gets the percentage as a float in between (0,1) this bar is currently set at.
+     *
+     * @return the percentage
+     * @since 1.0.1
+     */
+    public float getPercentage() {
+        return value;
+    }
+
+    /**
      * Sets the percentage of this bar. The percentage has to be in (0,1). If not, this method will throw an
      * {@link IllegalArgumentException}.
      *
@@ -102,56 +153,5 @@ public class PercentageBar extends VariableBar {
         } else {
             throw new UnsupportedOperationException("Unknown orientation");
         }
-    }
-
-    /**
-     * Gets the percentage as a float in between (0,1) this bar is currently set at.
-     *
-     * @return the percentage
-     * @since 1.0.1
-     */
-    public float getPercentage() {
-        return value;
-    }
-
-    /**
-     * Loads a percentage bar from a given element
-     *
-     * @param instance the instance class
-     * @param element  the element
-     * @return the percentage bar
-     */
-    @NotNull
-    @Contract(pure = true)
-    public static PercentageBar load(@NotNull Object instance, @NotNull Element element) {
-        int length;
-        int height;
-
-        try {
-            length = Integer.parseInt(element.getAttribute("length"));
-            height = Integer.parseInt(element.getAttribute("height"));
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
-
-        PercentageBar percentageBar = new PercentageBar(length, height);
-
-        Pane.load(percentageBar, instance, element);
-        Orientable.load(percentageBar, element);
-        Flippable.load(percentageBar, element);
-
-        if (element.hasAttribute("populate")) {
-            return percentageBar;
-        }
-
-        if (element.hasAttribute("percentage")) {
-            try {
-                percentageBar.setPercentage(Float.parseFloat(element.getAttribute("percentage")));
-            } catch (IllegalArgumentException exception) {
-                throw new XMLLoadException(exception);
-            }
-        }
-
-        return percentageBar;
     }
 }

@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
 
 /**
  * A slider for a graphical interface into what amount of a whole is set.
- * 
+ *
  * @author Despical
  * @since 0.5.0
  * <p>
@@ -31,6 +31,47 @@ public class Slider extends VariableBar {
 
     public Slider(int length, int height) {
         super(length, height);
+    }
+
+    /**
+     * Loads a percentage bar from a given element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the percentage bar
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static Slider load(@NotNull Object instance, @NotNull Element element) {
+        int length;
+        int height;
+
+        try {
+            length = Integer.parseInt(element.getAttribute("length"));
+            height = Integer.parseInt(element.getAttribute("height"));
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+
+        Slider slider = new Slider(length, height);
+
+        Pane.load(slider, instance, element);
+        Orientable.load(slider, element);
+        Flippable.load(slider, element);
+
+        if (element.hasAttribute("populate")) {
+            return slider;
+        }
+
+        if (element.hasAttribute("value")) {
+            try {
+                slider.setValue(Float.parseFloat(element.getAttribute("value")));
+            } catch (IllegalArgumentException exception) {
+                throw new XMLLoadException(exception);
+            }
+        }
+
+        return slider;
     }
 
     @Override
@@ -83,6 +124,16 @@ public class Slider extends VariableBar {
     }
 
     /**
+     * Gets the value as a float in between (0,1) this bar is currently set at.
+     *
+     * @return the value
+     * @since 1.0.1
+     */
+    public float getValue() {
+        return value;
+    }
+
+    /**
      * Sets the value of this bar. The value has to be in (0,1). If not, this method will throw an
      * {@link IllegalArgumentException}.
      *
@@ -112,56 +163,5 @@ public class Slider extends VariableBar {
         } else {
             throw new UnsupportedOperationException("Unknown orientation");
         }
-    }
-
-    /**
-     * Gets the value as a float in between (0,1) this bar is currently set at.
-     *
-     * @return the value
-     * @since 1.0.1
-     */
-    public float getValue() {
-        return value;
-    }
-
-    /**
-     * Loads a percentage bar from a given element
-     *
-     * @param instance the instance class
-     * @param element  the element
-     * @return the percentage bar
-     */
-    @NotNull
-    @Contract(pure = true)
-    public static Slider load(@NotNull Object instance, @NotNull Element element) {
-        int length;
-        int height;
-
-        try {
-            length = Integer.parseInt(element.getAttribute("length"));
-            height = Integer.parseInt(element.getAttribute("height"));
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
-
-        Slider slider = new Slider(length, height);
-
-        Pane.load(slider, instance, element);
-        Orientable.load(slider, element);
-        Flippable.load(slider, element);
-
-        if (element.hasAttribute("populate")) {
-            return slider;
-        }
-
-        if (element.hasAttribute("value")) {
-            try {
-                slider.setValue(Float.parseFloat(element.getAttribute("value")));
-            } catch (IllegalArgumentException exception) {
-                throw new XMLLoadException(exception);
-            }
-        }
-
-        return slider;
     }
 }

@@ -27,7 +27,8 @@ public final class SkullUtil {
      *
      * @since 1.0.1
      */
-    private SkullUtil() {}
+    private SkullUtil() {
+    }
 
     /**
      * Gets a skull from the specified id. The id is the value from the textures.minecraft.net website after the last
@@ -51,7 +52,7 @@ public final class SkullUtil {
      * The id is the value from the textures.minecraft.net website after the last '/' character.
      *
      * @param meta the meta to change
-     * @param id the skull id
+     * @param id   the skull id
      */
     public static void setSkull(@NotNull ItemMeta meta, @NotNull String id) {
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);

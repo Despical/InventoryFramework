@@ -37,7 +37,7 @@ public class XMLLoadException extends RuntimeException {
      * Constructs the exception with a given message and cause
      *
      * @param message the message to show
-     * @param cause the cause of this exception
+     * @param cause   the cause of this exception
      */
     public XMLLoadException(@NotNull String message, @NotNull Throwable cause) {
         super(message, cause);

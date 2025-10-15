@@ -20,7 +20,7 @@ import java.util.*;
 
 /**
  * A pane for items that should be outlined
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -92,6 +92,55 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
         this(0, 0, length, height);
     }
 
+    /**
+     * Loads an outline pane from a given element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the outline pane
+     */
+    @NotNull
+    public static OutlinePane load(@NotNull Object instance, @NotNull Element element) {
+        try {
+            OutlinePane outlinePane = new OutlinePane(
+                Integer.parseInt(element.getAttribute("length")),
+                Integer.parseInt(element.getAttribute("height"))
+            );
+
+            if (element.hasAttribute("gap"))
+                outlinePane.setGap(Integer.parseInt(element.getAttribute("gap")));
+
+            if (element.hasAttribute("repeat"))
+                outlinePane.setRepeat(Boolean.parseBoolean(element.getAttribute("repeat")));
+
+            Pane.load(outlinePane, instance, element);
+            Flippable.load(outlinePane, element);
+            Orientable.load(outlinePane, element);
+            Rotatable.load(outlinePane, element);
+
+            if (element.hasAttribute("populate"))
+                return outlinePane;
+
+            NodeList childNodes = element.getChildNodes();
+
+            for (int i = 0; i < childNodes.getLength(); i++) {
+                Node item = childNodes.item(i);
+
+                if (item.getNodeType() != Node.ELEMENT_NODE)
+                    continue;
+
+                if (item.getNodeName().equals("empty"))
+                    outlinePane.addItem(new GuiItem(new ItemStack(Material.AIR)));
+                else
+                    outlinePane.addItem(Pane.loadItem(instance, (Element) item));
+            }
+
+            return outlinePane;
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+    }
+
     @Override
     public void display(@NotNull Gui gui, @NotNull Inventory inventory, @NotNull PlayerInventory playerInventory,
                         int paneOffsetX, int paneOffsetY, int maxLength, int maxHeight) {
@@ -150,7 +199,7 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
                 newY = height - y - 1;
 
             Map.Entry<Integer, Integer> coordinates = GeometryUtil.processClockwiseRotation(newX, newY, length, height,
-                    rotation);
+                rotation);
 
             int finalRow = getY() + coordinates.getValue() + paneOffsetY;
             int finalColumn = getX() + coordinates.getKey() + paneOffsetX;
@@ -242,23 +291,10 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
         return true;
     }
 
-    @Override
-    public void setRotation(int rotation) {
-        if (length != height) {
-            throw new UnsupportedOperationException("length and height are different");
-        }
-
-        if (rotation % 90 != 0) {
-            throw new IllegalArgumentException("rotation isn't divisible by 90");
-        }
-
-        this.rotation = rotation % 360;
-    }
-
     /**
      * Adds a gui item in the specified index
      *
-     * @param item the item to add
+     * @param item  the item to add
      * @param index the item's index
      */
     public void insertItem(@NotNull GuiItem item, int index) {
@@ -316,20 +352,6 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
     }
 
     /**
-     * Sets the gap of the pane
-     *
-     * @param gap the new gap
-     */
-    public void setGap(int gap) {
-        this.gap = gap;
-    }
-
-    @Override
-    public void setOrientation(@NotNull Orientation orientation) {
-        this.orientation = orientation;
-    }
-
-    /**
      * Sets whether this pane should repeat itself
      *
      * @param repeat whether the pane should repeat
@@ -365,6 +387,15 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
         return gap;
     }
 
+    /**
+     * Sets the gap of the pane
+     *
+     * @param gap the new gap
+     */
+    public void setGap(int gap) {
+        this.gap = gap;
+    }
+
     @NotNull
     @Override
     public List<GuiItem> getItems() {
@@ -383,10 +414,28 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
         return orientation;
     }
 
+    @Override
+    public void setOrientation(@NotNull Orientation orientation) {
+        this.orientation = orientation;
+    }
+
     @Contract(pure = true)
     @Override
     public int getRotation() {
         return rotation;
+    }
+
+    @Override
+    public void setRotation(int rotation) {
+        if (length != height) {
+            throw new UnsupportedOperationException("length and height are different");
+        }
+
+        if (rotation % 90 != 0) {
+            throw new IllegalArgumentException("rotation isn't divisible by 90");
+        }
+
+        this.rotation = rotation % 360;
     }
 
     @Contract(pure = true)
@@ -399,54 +448,5 @@ public class OutlinePane extends Pane implements Flippable, Orientable, Rotatabl
     @Override
     public boolean isFlippedVertically() {
         return flipVertically;
-    }
-
-    /**
-     * Loads an outline pane from a given element
-     *
-     * @param instance the instance class
-     * @param element the element
-     * @return the outline pane
-     */
-    @NotNull
-    public static OutlinePane load(@NotNull Object instance, @NotNull Element element) {
-        try {
-            OutlinePane outlinePane = new OutlinePane(
-                Integer.parseInt(element.getAttribute("length")),
-                Integer.parseInt(element.getAttribute("height"))
-            );
-
-            if (element.hasAttribute("gap"))
-                outlinePane.setGap(Integer.parseInt(element.getAttribute("gap")));
-
-            if (element.hasAttribute("repeat"))
-                outlinePane.setRepeat(Boolean.parseBoolean(element.getAttribute("repeat")));
-
-            Pane.load(outlinePane, instance, element);
-            Flippable.load(outlinePane, element);
-            Orientable.load(outlinePane, element);
-            Rotatable.load(outlinePane, element);
-
-            if (element.hasAttribute("populate"))
-                return outlinePane;
-
-            NodeList childNodes = element.getChildNodes();
-
-            for (int i = 0; i < childNodes.getLength(); i++) {
-                Node item = childNodes.item(i);
-
-                if (item.getNodeType() != Node.ELEMENT_NODE)
-                    continue;
-
-                if (item.getNodeName().equals("empty"))
-                    outlinePane.addItem(new GuiItem(new ItemStack(Material.AIR)));
-                else
-                    outlinePane.addItem(Pane.loadItem(instance, (Element) item));
-            }
-
-            return outlinePane;
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
     }
 }

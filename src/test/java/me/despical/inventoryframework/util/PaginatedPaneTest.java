@@ -16,7 +16,6 @@ public class PaginatedPaneTest {
     void testGetPanesNonExistentPage() {
         PaginatedPane pane = new PaginatedPane(0, 0);
 
-        //noinspection ResultOfMethodCallIgnored
         assertThrows(IllegalArgumentException.class, () -> pane.getPanes(0));
     }
 

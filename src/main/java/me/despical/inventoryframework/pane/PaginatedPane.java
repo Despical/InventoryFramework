@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * A pane for panes that should be spread out over multiple pages
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -54,12 +54,74 @@ public class PaginatedPane extends Pane {
     }
 
     /**
+     * Loads a paginated pane from a given element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the paginated pane
+     */
+    @NotNull
+    public static PaginatedPane load(@NotNull Object instance, @NotNull Element element) {
+        try {
+            PaginatedPane paginatedPane = new PaginatedPane(
+                Integer.parseInt(element.getAttribute("length")),
+                Integer.parseInt(element.getAttribute("height"))
+            );
+
+            load(paginatedPane, instance, element);
+
+            if (element.hasAttribute("populate"))
+                return paginatedPane;
+
+            int pageCount = 0;
+
+            NodeList childNodes = element.getChildNodes();
+            for (int i = 0; i < childNodes.getLength(); i++) {
+                Node item = childNodes.item(i);
+
+                if (item.getNodeType() != Node.ELEMENT_NODE)
+                    continue;
+
+                NodeList innerNodes = item.getChildNodes();
+
+                for (int j = 0; j < innerNodes.getLength(); j++) {
+                    Node pane = innerNodes.item(j);
+
+                    if (pane.getNodeType() != Node.ELEMENT_NODE) {
+                        continue;
+                    }
+
+                    paginatedPane.addPane(pageCount, Gui.loadPane(instance, pane));
+                }
+
+                pageCount++;
+            }
+
+            return paginatedPane;
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+    }
+
+    /**
      * Returns the current page
      *
      * @return the current page
      */
     public int getPage() {
         return page;
+    }
+
+    /**
+     * Sets the current displayed page
+     *
+     * @param page the page
+     */
+    public void setPage(int page) {
+        if (!panes.containsKey(page))
+            throw new ArrayIndexOutOfBoundsException("Page outside range!");
+
+        this.page = page;
     }
 
     /**
@@ -70,6 +132,7 @@ public class PaginatedPane extends Pane {
     public int getPages() {
         return panes.size();
     }
+
     /**
      * Assigns a pane to a selected page
      *
@@ -86,49 +149,36 @@ public class PaginatedPane extends Pane {
     }
 
     /**
-     * Sets the current displayed page
+     * Populates the PaginatedPane based on the provided list by adding new pages until all items can fit.
+     * This can be helpful when dealing with lists of unknown size.
      *
-     * @param page the page
+     * @param items The list to populate the pane with
      */
-    public void setPage(int page) {
-		if (!panes.containsKey(page))
-			throw new ArrayIndexOutOfBoundsException("Page outside range!");
-
-		this.page = page;
-    }
-
-	/**
-	 * Populates the PaginatedPane based on the provided list by adding new pages until all items can fit.
-	 * This can be helpful when dealing with lists of unknown size.
-	 *
-	 * @param items The list to populate the pane with
-	 */
-	@Contract("null -> fail")
-	public void populateWithItemStacks(@NotNull List<ItemStack> items) {
-		if (items.isEmpty()) {
-		    return;
+    @Contract("null -> fail")
+    public void populateWithItemStacks(@NotNull List<ItemStack> items) {
+        if (items.isEmpty()) {
+            return;
         }
 
-		int itemsPerPage = this.height * this.length;
-		int pagesNeeded = (int) Math.max(Math.ceil(items.size() / (double) itemsPerPage), 1);
+        int itemsPerPage = this.height * this.length;
+        int pagesNeeded = (int) Math.max(Math.ceil(items.size() / (double) itemsPerPage), 1);
 
-		for (int i = 0; i < pagesNeeded; i++) {
-			OutlinePane page = new OutlinePane(0, 0, this.length, this.height);
+        for (int i = 0; i < pagesNeeded; i++) {
+            OutlinePane page = new OutlinePane(0, 0, this.length, this.height);
 
-			for (int j = 0; j < itemsPerPage; j++) {
-				int index = i * itemsPerPage + j;
+            for (int j = 0; j < itemsPerPage; j++) {
+                int index = i * itemsPerPage + j;
 
-				if (index >= items.size()) {
-				    break;
+                if (index >= items.size()) {
+                    break;
                 }
 
-				page.addItem(new GuiItem(items.get(index)));
-			}
+                page.addItem(new GuiItem(items.get(index)));
+            }
 
-			this.addPane(i, page);
-		}
-	}
-
+            this.addPane(i, page);
+        }
+    }
 
     /**
      * Populates the PaginatedPane based on the provided list by adding new pages until all items can fit.
@@ -162,26 +212,26 @@ public class PaginatedPane extends Pane {
         }
     }
 
-	/**
-	 * This method creates a list of ItemStacks all with the given {@code material} and the display names.
-	 * After that it calls {@link #populateWithItemStacks(List)}
-	 * This method also translates the color char {@code &} for all names.
-	 *
-	 * @param displayNames The display names for all the items
-	 * @param material The material to use for the {@link org.bukkit.inventory.ItemStack}s
-	 */
-	@Contract("null, _ -> fail")
-	public void populateWithNames(@NotNull List<String> displayNames, @Nullable Material material) {
-		if(material == null || material == Material.AIR) return;
+    /**
+     * This method creates a list of ItemStacks all with the given {@code material} and the display names.
+     * After that it calls {@link #populateWithItemStacks(List)}
+     * This method also translates the color char {@code &} for all names.
+     *
+     * @param displayNames The display names for all the items
+     * @param material     The material to use for the {@link org.bukkit.inventory.ItemStack}s
+     */
+    @Contract("null, _ -> fail")
+    public void populateWithNames(@NotNull List<String> displayNames, @Nullable Material material) {
+        if (material == null || material == Material.AIR) return;
 
-		populateWithItemStacks(displayNames.stream().map(name -> {
-			ItemStack itemStack = new ItemStack(material);
-			ItemMeta itemMeta = itemStack.getItemMeta();
-			itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
-			itemStack.setItemMeta(itemMeta);
-			return itemStack;
-		}).collect(Collectors.toList()));
-	}
+        populateWithItemStacks(displayNames.stream().map(name -> {
+            ItemStack itemStack = new ItemStack(material);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
+            itemStack.setItemMeta(itemMeta);
+            return itemStack;
+        }).collect(Collectors.toList()));
+    }
 
     @Override
     public void display(@NotNull Gui gui, @NotNull Inventory inventory, @NotNull PlayerInventory playerInventory,
@@ -192,7 +242,7 @@ public class PaginatedPane extends Pane {
             return;
         }
 
-        panes.forEach(pane -> pane.display(gui, inventory,  playerInventory,
+        panes.forEach(pane -> pane.display(gui, inventory, playerInventory,
             paneOffsetX + getX(), paneOffsetY + getY(),
             Math.min(length, maxLength), Math.min(height, maxHeight)));
     }
@@ -266,8 +316,8 @@ public class PaginatedPane extends Pane {
      *
      * @param page the panes of this page will be returned
      * @return a collection of panes belonging to the specified page
-     * @since 1.0.1
      * @throws IllegalArgumentException if the page does not exist
+     * @since 1.0.1
      */
     @NotNull
     @Contract(pure = true)
@@ -291,55 +341,5 @@ public class PaginatedPane extends Pane {
     @Override
     public void clear() {
         panes.clear();
-    }
-
-    /**
-     * Loads a paginated pane from a given element
-     *
-     * @param instance the instance class
-     * @param element the element
-     * @return the paginated pane
-     */
-    @NotNull
-    public static PaginatedPane load(@NotNull Object instance, @NotNull Element element) {
-        try {
-            PaginatedPane paginatedPane = new PaginatedPane(
-                Integer.parseInt(element.getAttribute("length")),
-                Integer.parseInt(element.getAttribute("height"))
-            );
-
-            load(paginatedPane, instance, element);
-
-            if (element.hasAttribute("populate"))
-                return paginatedPane;
-
-            int pageCount = 0;
-
-            NodeList childNodes = element.getChildNodes();
-            for (int i = 0; i < childNodes.getLength(); i++) {
-                Node item = childNodes.item(i);
-
-                if (item.getNodeType() != Node.ELEMENT_NODE)
-                    continue;
-
-                NodeList innerNodes = item.getChildNodes();
-
-                for (int j = 0; j < innerNodes.getLength(); j++) {
-                    Node pane = innerNodes.item(j);
-
-                    if (pane.getNodeType() != Node.ELEMENT_NODE) {
-                        continue;
-                    }
-
-					paginatedPane.addPane(pageCount, Gui.loadPane(instance, pane));
-                }
-
-                pageCount++;
-            }
-
-            return paginatedPane;
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
     }
 }

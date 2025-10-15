@@ -35,7 +35,7 @@ public class HumanEntityCache {
      * never go over the maximum stack size.
      *
      * @param humanEntity the human entity to add the item to
-     * @param item the item to add to the cached inventory
+     * @param item        the item to add to the cached inventory
      * @return the amount of leftover items that couldn't be fit in the cached inventory
      * @throws IllegalStateException if the human entity's inventory is not cached
      * @since 1.0.3
@@ -101,7 +101,7 @@ public class HumanEntityCache {
     public void store(@NotNull HumanEntity humanEntity) {
         ItemStack[] items = new ItemStack[36];
 
-        for (int i = 0 ; i < 36; i++) {
+        for (int i = 0; i < 36; i++) {
             items[i] = humanEntity.getInventory().getItem(i);
         }
 

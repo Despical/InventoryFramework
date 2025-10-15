@@ -31,7 +31,7 @@ public class Mask {
      *
      * @param mask a var-arg of strings that represent this mask
      * @throws IllegalArgumentException when a string contains an illegal character or when strings have different
-     * lengths
+     *                                  lengths
      * @since 1.0.1
      */
     public Mask(@NotNull String... mask) {

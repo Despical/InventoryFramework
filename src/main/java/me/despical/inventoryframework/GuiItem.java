@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 /**
  * An item for in an inventory
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -31,30 +31,29 @@ public class GuiItem {
      */
     @NotNull
     private final ItemStack item;
-
+    /**
+     * Internal UUID for keeping track of this item
+     */
+    @NotNull
+    private final UUID uuid = UUID.randomUUID();
     /**
      * Whether this item is visible or not
      */
     private boolean visible;
 
     /**
-     * Internal UUID for keeping track of this item
-     */
-    @NotNull
-    private final UUID uuid = UUID.randomUUID();
-
-    /**
      * Creates a new gui item based on the item stack and action
      *
-     * @param item the item stack
+     * @param item   the item stack
      * @param action the action called whenever an interaction with this item happens
      */
     public GuiItem(@NotNull ItemStack item, @Nullable Consumer<InventoryClickEvent> action) {
-        this.action = action == null ? event -> {} : action;
+        this.action = action == null ? event -> {
+        } : action;
         this.visible = true;
 
-		NBTItem nbtItem = new NBTItem(item);
-		nbtItem.setString("IF-uuid", uuid.toString());
+        NBTItem nbtItem = new NBTItem(item);
+        nbtItem.setString("IF-uuid", uuid.toString());
 
         this.item = nbtItem.getItem();
     }
@@ -66,6 +65,14 @@ public class GuiItem {
      */
     public GuiItem(@NotNull ItemStack item) {
         this(item, null);
+    }
+
+    public static GuiItem of(@NotNull ItemStack itemStack) {
+        return of(itemStack, null);
+    }
+
+    public static GuiItem of(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
+        return new GuiItem(itemStack, action);
     }
 
     /**
@@ -119,13 +126,5 @@ public class GuiItem {
      */
     public void setVisible(boolean visible) {
         this.visible = visible;
-    }
-
-    public static GuiItem of(@NotNull ItemStack itemStack) {
-        return of(itemStack, null);
-    }
-
-    public static GuiItem of(@NotNull ItemStack itemStack, @Nullable Consumer<InventoryClickEvent> action) {
-        return new GuiItem(itemStack, action);
     }
 }

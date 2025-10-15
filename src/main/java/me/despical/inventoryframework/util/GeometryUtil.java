@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * An utility class for Geometry
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -21,10 +21,10 @@ public class GeometryUtil {
     /**
      * Calculates a clockwise rotation across a two dimensional grid
      *
-     * @param x the standard x coordinate
-     * @param y the standard y coordinate
-     * @param length the length of the grid
-     * @param height the height of the grid
+     * @param x        the standard x coordinate
+     * @param y        the standard y coordinate
+     * @param length   the length of the grid
+     * @param height   the height of the grid
      * @param rotation the rotation in degrees
      * @return a pair of new coordinates, with the x coordinate being the key and the y coordinate being the value
      */
@@ -51,10 +51,10 @@ public class GeometryUtil {
      * Calculates a counter clockwise rotation across a two dimensional grid. This is the same as calling
      * {@link #processClockwiseRotation(int, int, int, int, int)} with 360 - rotation as the rotation.
      *
-     * @param x the standard x coordinate
-     * @param y the standard y coordinate
-     * @param length the length of the grid
-     * @param height the height of the grid
+     * @param x        the standard x coordinate
+     * @param y        the standard y coordinate
+     * @param length   the length of the grid
+     * @param height   the height of the grid
      * @param rotation the rotation in degrees
      * @return a pair of new coordinates, with the x coordinate being the key and the y coordinate being the value
      */
@@ -71,29 +71,29 @@ public class GeometryUtil {
 
     @Contract(pure = true)
     public static int[] slotToXY(int slot) {
-		return new int[] {slot % 9, slot / 9};
-	}
+        return new int[]{slot % 9, slot / 9};
+    }
 
     @Contract(pure = true)
     public static int[] getBorders(int row) {
-		List<Integer> borders = new ArrayList<>();
+        List<Integer> borders = new ArrayList<>();
 
         for (int i = 0; i < 9; i++) {
-			borders.add(i);
-		}
+            borders.add(i);
+        }
 
         for (int i = 1; i < row - 1; i++) {
-			borders.add(xyToSlot(8, i));
-		}
+            borders.add(xyToSlot(8, i));
+        }
 
-		for (int i = 0; i < 9; i++) {
-			borders.add(xyToSlot(8 - i, row - 1));
-		}
+        for (int i = 0; i < 9; i++) {
+            borders.add(xyToSlot(8 - i, row - 1));
+        }
 
         for (int i = 1; i < row - 1; i++) {
             borders.add(xyToSlot(0, row - i - 1));
-		}
+        }
 
-		return borders.stream().mapToInt(Integer::intValue).toArray();
+        return borders.stream().mapToInt(Integer::intValue).toArray();
     }
 }

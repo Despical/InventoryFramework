@@ -23,14 +23,15 @@ import java.util.regex.Pattern;
  */
 public final class CSVUtil {
 
+    private static final Pattern UNICODE_CHARACTER_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
+
     /**
      * A private constructor to ensure this utility class is never instantiated
      *
      * @since 1.0.1
      */
-    private CSVUtil() {}
-
-    private static final Pattern UNICODE_CHARACTER_PATTERN = Pattern.compile("\\\\u([0-9A-Fa-f]{4})");
+    private CSVUtil() {
+    }
 
     /**
      * Reads the entire file and returns it as a list of strings.
@@ -93,7 +94,7 @@ public final class CSVUtil {
 
                 strings.add(array);
             }
-            
+
             return strings;
         }
     }

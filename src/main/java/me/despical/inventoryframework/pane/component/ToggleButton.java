@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 /**
  * A button that toggles between an enabled and disabled state.
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -63,9 +63,40 @@ public class ToggleButton extends Pane {
         setY(y);
     }
 
+    /**
+     * Loads a toggle button from an XML element
+     *
+     * @param instance the instance class
+     * @param element  the element
+     * @return the toggle button
+     * @since 1.0.1
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static ToggleButton load(@NotNull Object instance, @NotNull Element element) {
+        int length, height;
+
+        try {
+            length = Integer.parseInt(element.getAttribute("length"));
+            height = Integer.parseInt(element.getAttribute("height"));
+        } catch (NumberFormatException exception) {
+            throw new XMLLoadException(exception);
+        }
+
+        ToggleButton toggleButton = new ToggleButton(length, height);
+
+        Pane.load(toggleButton, instance, element);
+
+        if (element.hasAttribute("enabled") && Boolean.parseBoolean(element.getAttribute("enabled"))) {
+            toggleButton.toggle();
+        }
+
+        return toggleButton;
+    }
+
     @Override
     public void display(@NotNull Gui gui, @NotNull Inventory inventory, @NotNull PlayerInventory playerInventory,
-						int paneOffsetX, int paneOffsetY, int maxLength, int maxHeight) {
+                        int paneOffsetX, int paneOffsetY, int maxLength, int maxHeight) {
         int newX = paneOffsetX + x;
         int newY = paneOffsetY + y;
 
@@ -170,36 +201,6 @@ public class ToggleButton extends Pane {
     }
 
     @Override
-    public void clear() {}
-
-    /**
-     * Loads a toggle button from an XML element
-     *
-     * @param instance the instance class
-     * @param element the element
-     * @return the toggle button
-     * @since 1.0.1
-     */
-    @NotNull
-    @Contract(pure = true)
-    public static ToggleButton load(@NotNull Object instance, @NotNull Element element) {
-        int length, height;
-
-        try {
-            length = Integer.parseInt(element.getAttribute("length"));
-            height = Integer.parseInt(element.getAttribute("height"));
-        } catch (NumberFormatException exception) {
-            throw new XMLLoadException(exception);
-        }
-
-        ToggleButton toggleButton = new ToggleButton(length, height);
-
-        Pane.load(toggleButton, instance, element);
-
-        if (element.hasAttribute("enabled") && Boolean.parseBoolean(element.getAttribute("enabled"))) {
-            toggleButton.toggle();
-        }
-
-        return toggleButton;
+    public void clear() {
     }
 }

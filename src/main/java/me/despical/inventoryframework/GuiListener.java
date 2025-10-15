@@ -5,7 +5,10 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
@@ -24,7 +27,7 @@ import java.util.function.Consumer;
 /**
  * Listens to events for {@link Gui}s. Only one instance of this class gets constructed.
  * (One instance per plugin, but plugins are supposed to shade and relocate IF.)
- * 
+ *
  * @author Despical
  * @since 1.0.1
  * <p>
@@ -160,12 +163,12 @@ public class GuiListener implements Listener {
             return;
         }
 
-		Gui gui = (Gui) event.getInventory().getHolder();
-		Consumer<InventoryDragEvent> onDrag = gui.getOnDrag();
+        Gui gui = (Gui) event.getInventory().getHolder();
+        Consumer<InventoryDragEvent> onDrag = gui.getOnDrag();
 
-		if (onDrag != null) {
-			onDrag.accept(event);
-		}
+        if (onDrag != null) {
+            onDrag.accept(event);
+        }
     }
 
     /**
@@ -223,7 +226,7 @@ public class GuiListener implements Listener {
         }
 
         int counter = 0;
-		int maxCount = 10;
+        int maxCount = 10;
         while (!activeGuiInstances.isEmpty() && counter++ < maxCount) {
             for (Gui gui : new ArrayList<>(activeGuiInstances)) {
                 for (HumanEntity viewer : gui.getViewers()) {
@@ -233,8 +236,8 @@ public class GuiListener implements Listener {
         }
 
         if (counter == maxCount) {
-			plugin.getLogger().warning("Unable to close GUIs on plugin disable: they keep getting opened "
-					+ "(tried: " + maxCount + " times)");
-		}
+            plugin.getLogger().warning("Unable to close GUIs on plugin disable: they keep getting opened "
+                + "(tried: " + maxCount + " times)");
+        }
     }
 }
