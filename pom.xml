@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.despical</groupId>
+    <groupId>dev.despical</groupId>
     <artifactId>inventory-framework</artifactId>
-    <version>2.4.1</version>
+    <version>2.4.2</version>
 
     <name>Inventory Framework</name>
     <inceptionYear>2020</inceptionYear>
@@ -135,7 +135,7 @@
                     <relocations>
                         <relocation>
                             <pattern>de.tr7zw.nbtapi</pattern>
-                            <shadedPattern>me.despical.inventoryframework.nbt</shadedPattern>
+                            <shadedPattern>dev.despical.inventoryframework.nbt</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

@@ -21,7 +21,7 @@ To add this project as a dependency to your project, add the following to your p
 <dependency>
     <groupId>com.github.Despical</groupId>
     <artifactId>inventory-framework</artifactId>
-    <version>2.4.1</version>
+    <version>2.4.2</version>
 </dependency>
 ```
 
@@ -35,7 +35,7 @@ Now in order to shade the project into your project, add the following to your p
         <createDependencyReducedPom>false</createDependencyReducedPom>
         <relocations>
             <relocation>
-                <pattern>me.despical.inventoryframework</pattern>
+                <pattern>dev.despical.inventoryframework</pattern>
                 <shadedPattern>[YOUR PACKAGE].inventoryframework</shadedPattern>
             </relocation>
         </relocations>
@@ -65,7 +65,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'com.github.despical:inventory-framework:2.4.1'
+    compile 'com.github.despical:inventory-framework:2.4.2'
     // ...
 }
 ```
@@ -76,7 +76,7 @@ apply plugin: 'com.github.johnrengelman.shadow'
 To relocate the project's classes to your own namespace, add the following, with [YOUR PACKAGE] being the top-level package of your project:
 ```Groovy
 shadowJar {
-    relocate 'me.despical', '[YOUR PACKAGE].inventoryframework'
+    relocate 'dev.despical.inventoryframework', '[YOUR PACKAGE].inventoryframework'
 }
 ```
 
