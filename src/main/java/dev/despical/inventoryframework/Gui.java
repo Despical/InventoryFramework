@@ -3,8 +3,6 @@ package dev.despical.inventoryframework;
 import dev.despical.inventoryframework.exception.XMLLoadException;
 import dev.despical.inventoryframework.pane.*;
 import dev.despical.inventoryframework.pane.component.*;
-import me.despical.inventoryframework.pane.*;
-import me.despical.inventoryframework.pane.component.*;
 import dev.despical.inventoryframework.util.XMLUtil;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.Bukkit;

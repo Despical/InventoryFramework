@@ -5,7 +5,6 @@ import dev.despical.inventoryframework.GuiItem;
 import dev.despical.inventoryframework.exception.XMLLoadException;
 import dev.despical.inventoryframework.font.util.Font;
 import dev.despical.inventoryframework.pane.*;
-import me.despical.inventoryframework.pane.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Contract;
