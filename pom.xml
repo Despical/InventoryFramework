@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dev.despical</groupId>
     <artifactId>inventory-framework</artifactId>
-    <version>2.4.3</version>
+    <version>2.4.4</version>
 
     <name>Inventory Framework</name>
     <inceptionYear>2020</inceptionYear>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.github.Despical</groupId>
             <artifactId>Item-NBT-API</artifactId>
-            <version>1.1.4</version>
+            <version>1.1.5</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
