@@ -21,7 +21,7 @@ To add this project as a dependency to your project, add the following to your p
 <dependency>
     <groupId>dev.despical</groupId>
     <artifactId>inventory-framework</artifactId>
-    <version>2.4.5</version>
+    <version>2.4.6</version>
 </dependency>
 ```
 
@@ -65,7 +65,7 @@ Replace [YOUR PACKAGE] with the top-level package of your project.
 To add this project as a dependency for your Gradle project, make sure your `dependencies` section of your build.gradle looks like the following:
 ```Groovy
 dependencies {
-    compile 'dev.despical:inventory-framework:2.4.5'
+    compile 'dev.despical:inventory-framework:2.4.6'
     // ...
 }
 ```

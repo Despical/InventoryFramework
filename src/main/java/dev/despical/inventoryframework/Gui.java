@@ -4,6 +4,8 @@ import dev.despical.inventoryframework.exception.XMLLoadException;
 import dev.despical.inventoryframework.pane.*;
 import dev.despical.inventoryframework.pane.component.*;
 import dev.despical.inventoryframework.util.XMLUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -125,13 +127,6 @@ public class Gui implements InventoryHolder {
      */
     private boolean updating = false;
 
-    /**
-     * Constructs a new GUI
-     *
-     * @param plugin the main plugin.
-     * @param rows   the amount of rows this gui should contain, in range 1..6.
-     * @param title  the title/name of this gui.
-     */
     public Gui(@NotNull Plugin plugin, int rows, @NotNull String title) {
         if (!(rows >= 1 && rows <= 6)) {
             throw new IllegalArgumentException("Rows should be between 1 and 6");
@@ -143,7 +138,29 @@ public class Gui implements InventoryHolder {
 
         if (!hasRegisteredListeners) {
             plugin.getServer().getPluginManager().registerEvents(new GuiListener(plugin), plugin);
+            hasRegisteredListeners = true;
+        }
+    }
 
+    /**
+     * Constructs a new GUI
+     *
+     * @param plugin the main plugin.
+     * @param rows   the amount of rows this gui should contain, in range 1..6.
+     * @param title  the title/name of this gui.
+     */
+    public Gui(@NotNull Plugin plugin, int rows, @NotNull Component title) {
+        if (!(rows >= 1 && rows <= 6)) {
+            throw new IllegalArgumentException("Rows should be between 1 and 6");
+        }
+
+        this.panes = new ArrayList<>();
+        this.title = MiniMessage.miniMessage().serialize(title);
+
+        this.inventory = plugin.getServer().createInventory(this, rows * 9, title);
+
+        if (!hasRegisteredListeners) {
+            plugin.getServer().getPluginManager().registerEvents(new GuiListener(plugin), plugin);
             hasRegisteredListeners = true;
         }
     }
@@ -645,6 +662,15 @@ public class Gui implements InventoryHolder {
      *
      * @param title the title
      */
+    public void setTitle(@NotNull Component title) {
+        List<HumanEntity> viewers = new ArrayList<>(getViewers());
+
+        this.title = MiniMessage.miniMessage().serialize(title);
+        this.inventory = Bukkit.createInventory(this, this.inventory.getSize(), title);
+
+        viewers.forEach(humanEntity -> humanEntity.openInventory(inventory));
+    }
+
     public void setTitle(@NotNull String title) {
         List<HumanEntity> viewers = getViewers();
 
