@@ -87,6 +87,11 @@ public class Gui implements InventoryHolder {
     @NotNull
     private String title;
     /**
+     * The component title of this gui (Paper/Adventure support)
+     */
+    @Nullable
+    private Component componentTitle;
+    /**
      * The state of this gui
      */
     @NotNull
@@ -134,6 +139,8 @@ public class Gui implements InventoryHolder {
 
         this.panes = new ArrayList<>();
         this.title = ChatColor.translateAlternateColorCodes('&', title);
+        this.componentTitle = null;
+
         this.inventory = plugin.getServer().createInventory(this, rows * 9, this.title);
 
         if (!hasRegisteredListeners) {
@@ -155,6 +162,10 @@ public class Gui implements InventoryHolder {
         }
 
         this.panes = new ArrayList<>();
+
+        // Component'i sakla!
+        this.componentTitle = title;
+        // String halini de sakla (fallback için)
         this.title = MiniMessage.miniMessage().serialize(title);
 
         this.inventory = plugin.getServer().createInventory(this, rows * 9, title);
@@ -640,7 +651,11 @@ public class Gui implements InventoryHolder {
 
         List<HumanEntity> viewers = getViewers();
 
-        this.inventory = Bukkit.createInventory(this, rows * 9, getTitle());
+        if (this.componentTitle != null) {
+            this.inventory = Bukkit.createInventory(this, rows * 9, this.componentTitle);
+        } else {
+            this.inventory = Bukkit.createInventory(this, rows * 9, getTitle());
+        }
 
         viewers.forEach(humanEntity -> humanEntity.openInventory(inventory));
     }
@@ -662,20 +677,22 @@ public class Gui implements InventoryHolder {
      *
      * @param title the title
      */
-    public void setTitle(@NotNull Component title) {
-        List<HumanEntity> viewers = new ArrayList<>(getViewers());
-
-        this.title = MiniMessage.miniMessage().serialize(title);
-        this.inventory = Bukkit.createInventory(this, this.inventory.getSize(), title);
-
-        viewers.forEach(humanEntity -> humanEntity.openInventory(inventory));
-    }
-
     public void setTitle(@NotNull String title) {
         List<HumanEntity> viewers = getViewers();
 
         this.inventory = Bukkit.createInventory(this, this.inventory.getSize(), title);
         this.title = ChatColor.translateAlternateColorCodes('&', title);
+        this.componentTitle = null;
+
+        viewers.forEach(humanEntity -> humanEntity.openInventory(inventory));
+    }
+
+    public void setTitle(@NotNull Component title) {
+        List<HumanEntity> viewers = new ArrayList<>(getViewers());
+
+        this.componentTitle = title;
+        this.title = MiniMessage.miniMessage().serialize(title);
+        this.inventory = Bukkit.createInventory(this, this.inventory.getSize(), title);
 
         viewers.forEach(humanEntity -> humanEntity.openInventory(inventory));
     }
